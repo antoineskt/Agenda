@@ -23,16 +23,30 @@ const StyledDiv = styled.div`
 
 function Home() {
   const [items, setItems] = useState([])
+  const [isLoading, setIsLoading] = useState(true) // New state variable
+
+  const getData = async () => {
+    const datas = await JSON.parse(localStorage.getItem('todos'))
+    console.log(JSON.stringify(datas))
+    if (datas) {
+      setItems(datas)
+    }
+    setIsLoading(false) // Mark data loading as complete
+  }
 
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem('todos'))
-    console.log(JSON.stringify(items))
-    if (items) {
-      setItems(items)
-    }
+    getData()
   }, [])
 
   function TodoHomePage() {
+    if (isLoading) {
+      return <div>Loading...</div> // Display a loading message while data is being fetched
+    }
+
+    if (items.length === 0) {
+      return <div>No items found.</div>
+    }
+
     return (
       <ul>
         {items.map((item, index) => (
@@ -57,35 +71,41 @@ function Home() {
       return item !== text
     })
     setItems(newTodos)
-    localStorage.setItem('todos', JSON.stringify(items))
+    localStorage.setItem('todos', JSON.stringify(newTodos))
   }
 
-  if (items) {
-    console.log('there is items')
-    console.log(items)
-    return (
-      <HomeContainer>
-        <Header />
-        <div>coucou</div>
-        <TodoHomePage />
-      </HomeContainer>
-    )
+  if (isLoading) {
+    return <div>is loading..</div>
   } else {
-    return (
-      <HomeContainer>
-        <Header />
-        <MainStyled>
-          <StyledDiv>
-            Crée une habitude personnalisée dès maintenant afin
-            <br /> de suivre et d'accomplir tes objectifs :
-          </StyledDiv>
+    if (items.length !== 0) {
+      console.log(
+        'il y a des items ds le local storage, donc on affiche la page toDo'
+      )
 
-          <Link to="/AddHabitOne">
-            <Button>Click me!</Button>
-          </Link>
-        </MainStyled>
-      </HomeContainer>
-    )
+      return (
+        <HomeContainer>
+          <Header />
+          <div>coucou</div>
+          <TodoHomePage />
+        </HomeContainer>
+      )
+    } else {
+      return (
+        <HomeContainer>
+          <Header />
+          <MainStyled>
+            <StyledDiv>
+              Crée une habitude personnalisée dès maintenant afin
+              <br /> de suivre et d'accomplir tes objectifs :
+            </StyledDiv>
+
+            <Link to="/AddHabitOne">
+              <Button>Click me!</Button>
+            </Link>
+          </MainStyled>
+        </HomeContainer>
+      )
+    }
   }
 }
 

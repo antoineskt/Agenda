@@ -12,9 +12,9 @@ function AddHabitTwo() {
 
   function saveData() {
     if (inputValue !== '') {
-      console.log('ok')
+      const newDatas = [...items, inputValue]
       setItems([...items, inputValue])
-      localStorage.setItem('todos', JSON.stringify(items))
+      localStorage.setItem('todos', JSON.stringify(newDatas))
       setInputValue('')
     } else return console.log('pas de data entrée')
   }
@@ -24,6 +24,7 @@ function AddHabitTwo() {
       return item !== text
     })
     setItems(newTodos)
+    localStorage.setItem('todos', JSON.stringify(newTodos))
   }
 
   function Todo() {
