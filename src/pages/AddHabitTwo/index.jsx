@@ -1,6 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Header from '../../components/Header'
 import Button from '../../components/Button'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+
+const StyledContaineur = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
 
 function AddHabitTwo() {
   const [inputValue, setInputValue] = useState()
@@ -19,46 +28,20 @@ function AddHabitTwo() {
     } else return console.log('pas de data entrée')
   }
 
-  const deleteTodo = (text) => {
-    const newTodos = items.filter((item) => {
-      return item !== text
-    })
-    setItems(newTodos)
-    localStorage.setItem('todos', JSON.stringify(newTodos))
-  }
-
-  function Todo() {
-    if (items.length > 0) {
-      return (
-        <ul>
-          {items.map((item, index) => (
-            <div>
-              <li key={index}> {item} </li>
-              <button
-                onClick={() => {
-                  deleteTodo(item)
-                }}
-              >
-                delete
-              </button>
-            </div>
-          ))}
-        </ul>
-      )
-    } else return <div>no task again</div>
-  }
-
   return (
     <div>
       <Header />
-      <h1>Quel est votre habitude ? </h1>
-      <input
-        placeholder="écrivez ici"
-        onChange={handleInput}
-        value={inputValue}
-      />
-      <Button onClick={saveData}>VALIDER</Button>
-      <Todo />
+      <StyledContaineur>
+        <h1>Quel est votre habitude ? </h1>
+        <input
+          placeholder="écrivez ici"
+          onChange={handleInput}
+          value={inputValue}
+        />
+        <Link to="/">
+          <Button onClick={saveData}>VALIDER</Button>
+        </Link>
+      </StyledContaineur>
     </div>
   )
 }

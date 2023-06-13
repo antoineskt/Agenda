@@ -77,10 +77,10 @@ nav input:checked::after {
   
 ul {
 	
-margin: 0;
+margin: 10;
 padding: 0;
 list-style-type: none;
-position: fixed;
+position: fixed; 
 background: inherit; /*hérite du background du parent (nav)*/
 top: 0;
 left: 0;
@@ -89,7 +89,7 @@ bottom: 0;/*inset: 0*/
 display: flex;
 flex-flow: column;
 align-items: center;
-justify-content: center;
+
 row-gap: 30px;
 transform: translate(-100%);
 will-change: transform,opacity;

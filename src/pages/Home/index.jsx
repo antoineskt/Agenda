@@ -58,13 +58,22 @@ function Home() {
                 deleteTodo(item)
               }}
             >
-              delete
+              supprimer
+            </button>
+            <button
+              onClick={() => {
+                modificateTodo(item)
+              }}
+            >
+              modifier
             </button>
           </div>
         ))}
       </ul>
     )
   }
+
+  const modificateTodo = (text) => {}
 
   const deleteTodo = (text) => {
     const newTodos = items.filter((item) => {
@@ -85,7 +94,7 @@ function Home() {
       return (
         <HomeContainer>
           <Header />
-          <div>coucou</div>
+
           <TodoHomePage />
         </HomeContainer>
       )
