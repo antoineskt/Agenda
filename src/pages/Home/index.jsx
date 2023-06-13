@@ -60,13 +60,15 @@ function Home() {
             >
               supprimer
             </button>
-            <button
-              onClick={() => {
-                modificateTodo(item)
-              }}
-            >
-              modifier
-            </button>
+            <Link to="/Edit">
+              <button
+                onClick={() => {
+                  modificateTodo(item)
+                }}
+              >
+                modifier
+              </button>
+            </Link>
           </div>
         ))}
       </ul>
