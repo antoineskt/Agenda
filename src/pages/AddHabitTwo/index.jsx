@@ -13,18 +13,26 @@ const StyledContaineur = styled.div`
 
 function AddHabitTwo() {
   const [inputValue, setInputValue] = useState()
-  const [items, setItems] = useState([])
 
   function handleInput(e) {
     setInputValue(e.target.value)
   }
 
-  function saveData() {
+  const saveData = () => {
     if (inputValue !== '') {
-      const newDatas = [...items, inputValue]
-      setItems([...items, inputValue])
-      localStorage.setItem('todos', JSON.stringify(newDatas))
-      setInputValue('')
+      const getDatasFromLocalStorage = JSON.parse(localStorage.getItem('todos'))
+      if (getDatasFromLocalStorage) {
+        console.log('je log getdata : ' + getDatasFromLocalStorage)
+        const newDatas = [...getDatasFromLocalStorage, inputValue]
+        console.log(' je log newdatas : ' + newDatas)
+        localStorage.setItem('todos', JSON.stringify(newDatas))
+        setInputValue('')
+      } else {
+        const newData = [inputValue]
+        console.log('je log newData : ' + newData)
+        localStorage.setItem('todos', JSON.stringify(newData))
+        setInputValue('')
+      }
     } else return console.log('pas de data entrée')
   }
 
