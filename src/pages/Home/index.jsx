@@ -3,6 +3,7 @@ import Header from '../../components/Header'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import Todo from '../../components/Todo'
 
 const HomeContainer = styled.div`
   margin: 0;
@@ -38,51 +39,62 @@ function Home() {
     getData()
   }, [])
 
+  function deleteTask(id) {
+    const remainingTasks = items.filter((task) => id !== task.id)
+    setItems(remainingTasks)
+    localStorage.setItem('todos', JSON.stringify(remainingTasks))
+  }
+
+  function editTask(id, newName) {
+    const editedTaskList = items.map((task) => {
+      // if this task has the same ID as the edited task
+      if (id === task.id) {
+        //
+        return { ...task, name: newName }
+      }
+      return task
+    })
+    setItems(editedTaskList)
+    localStorage.setItem('todos', JSON.stringify(editedTaskList))
+  }
+
+  function toggleTaskCompleted(id) {
+    const updatedTasks = items.map((task) => {
+      // si cette tâche possède le même identifiant que la tâche éditée
+      if (id === task.id) {
+        // on utilise la décomposition objet afin
+        // de construire un nouvel objet dont la
+        // propriété `completed` est l'inverse
+        return { ...task, completed: !task.completed }
+      }
+      return task
+    })
+    setItems(updatedTasks)
+    localStorage.setItem('todos', JSON.stringify(updatedTasks))
+  }
+
   function TodoHomePage() {
     if (isLoading) {
       return <div>Loading...</div> // Display a loading message while data is being fetched
     }
 
-    if (items.length === 0) {
+    if (items.length < 1) {
       return <div>No items found.</div>
     }
 
-    return (
-      <ul>
-        {items.map((item, index) => (
-          <div>
-            <li key={index}> {item} </li>
-            <button
-              key={`${item}-${index}`}
-              onClick={() => {
-                deleteTodo(item)
-              }}
-            >
-              supprimer
-            </button>
-            <Link to="/Edit">
-              <button
-                onClick={() => {
-                  modificateTodo(item)
-                }}
-              >
-                modifier
-              </button>
-            </Link>
-          </div>
-        ))}
-      </ul>
-    )
-  }
+    const taskLists = items.map((task) => (
+      <Todo
+        id={task.id}
+        name={task.name}
+        key={task.id}
+        deleteTask={deleteTask}
+        editTask={editTask}
+        completed={task.completed}
+        toggleTaskCompleted={toggleTaskCompleted}
+      />
+    ))
 
-  const modificateTodo = (text) => {}
-
-  const deleteTodo = (text) => {
-    const newTodos = items.filter((item) => {
-      return item !== text
-    })
-    setItems(newTodos)
-    localStorage.setItem('todos', JSON.stringify(newTodos))
+    return <ul>{taskLists}</ul>
   }
 
   if (isLoading) {

@@ -3,6 +3,7 @@ import Header from '../../components/Header'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { nanoid } from 'nanoid'
 
 const StyledContaineur = styled.div`
   display: flex;
@@ -12,26 +13,23 @@ const StyledContaineur = styled.div`
 `
 
 function AddHabitTwo() {
-  const [inputValue, setInputValue] = useState()
+  const [name, setName] = useState()
 
   function handleInput(e) {
-    setInputValue(e.target.value)
+    setName(e.target.value)
   }
 
-  const saveData = () => {
-    if (inputValue !== '') {
-      const getDatasFromLocalStorage = JSON.parse(localStorage.getItem('todos'))
-      if (getDatasFromLocalStorage) {
-        console.log('je log getdata : ' + getDatasFromLocalStorage)
-        const newDatas = [...getDatasFromLocalStorage, inputValue]
-        console.log(' je log newdatas : ' + newDatas)
-        localStorage.setItem('todos', JSON.stringify(newDatas))
-        setInputValue('')
+  function saveData() {
+    if (name !== '') {
+      const newDatas = { id: `todo-${nanoid()}`, name, completed: false }
+      const getDataFromLS = JSON.parse(localStorage.getItem('todos'))
+      if (getDataFromLS) {
+        const newDatasForLS = [...getDataFromLS, newDatas]
+        localStorage.setItem('todos', JSON.stringify(newDatasForLS))
+        setName('')
       } else {
-        const newData = [inputValue]
-        console.log('je log newData : ' + newData)
-        localStorage.setItem('todos', JSON.stringify(newData))
-        setInputValue('')
+        localStorage.setItem('todos', JSON.stringify(newDatas))
+        setName('')
       }
     } else return console.log('pas de data entrée')
   }
@@ -44,7 +42,8 @@ function AddHabitTwo() {
         <input
           placeholder="écrivez ici"
           onChange={handleInput}
-          value={inputValue}
+          value={name}
+          id="new-todo-input"
         />
         <Link to="/">
           <Button onClick={saveData}>VALIDER</Button>
