@@ -13,7 +13,7 @@ const StyledContaineur = styled.div`
 `
 
 function AddHabitTwo() {
-  const [name, setName] = useState()
+  const [name, setName] = useState('')
 
   function handleInput(e) {
     setName(e.target.value)
@@ -21,14 +21,17 @@ function AddHabitTwo() {
 
   function saveData() {
     if (name !== '') {
-      const newDatas = { id: `todo-${nanoid()}`, name, completed: false }
+      console.log('le name est ' + name)
+      const newDatas = { id: `todo-${nanoid()}`, name: name, completed: false }
       const getDataFromLS = JSON.parse(localStorage.getItem('todos'))
       if (getDataFromLS) {
         const newDatasForLS = [...getDataFromLS, newDatas]
+        console.log('log de newdatasForLS : ' + newDatasForLS)
         localStorage.setItem('todos', JSON.stringify(newDatasForLS))
         setName('')
       } else {
-        localStorage.setItem('todos', JSON.stringify(newDatas))
+        console.log('log de newDatas : ' + JSON.stringify(newDatas))
+        localStorage.setItem('todos', JSON.stringify([newDatas])) //je mets un tableau ici pr créer un tableau d'objets
         setName('')
       }
     } else return console.log('pas de data entrée')
@@ -40,10 +43,12 @@ function AddHabitTwo() {
       <StyledContaineur>
         <h1>Quel est votre habitude ? </h1>
         <input
+          type="text"
           placeholder="écrivez ici"
           onChange={handleInput}
           value={name}
           id="new-todo-input"
+          autoComplete="off"
         />
         <Link to="/">
           <Button onClick={saveData}>VALIDER</Button>

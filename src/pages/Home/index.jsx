@@ -28,7 +28,7 @@ function Home() {
 
   const getData = async () => {
     const datas = await JSON.parse(localStorage.getItem('todos'))
-    console.log(JSON.stringify(datas))
+    console.log('je log les datas(homepage) : ' + JSON.stringify(datas))
     if (datas) {
       setItems(datas)
     }
@@ -81,7 +81,7 @@ function Home() {
     if (items.length < 1) {
       return <div>No items found.</div>
     }
-
+    console.log(typeof items) // ici items est un object mais il map qd mm ?
     const taskLists = items.map((task) => (
       <Todo
         id={task.id}
@@ -113,6 +113,9 @@ function Home() {
         </HomeContainer>
       )
     } else {
+      console.log(
+        "pas d'items dans le local storage, on affiche la page d'accueil avec le bouton"
+      )
       return (
         <HomeContainer>
           <Header />
