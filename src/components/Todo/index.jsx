@@ -168,6 +168,6 @@ export default function ToDo(props) {
     </StyledDiv>
   )
   return (
-    <li className="todo">{isEditing ? editingTemplate : normalTemplate}</li>
+    <div className="todo">{isEditing ? editingTemplate : normalTemplate}</div>
   )
 }

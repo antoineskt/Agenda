@@ -26,14 +26,16 @@ const StyledH1 = styled.h1`
 const StyledInput = styled.input`
   font-size: 2em;
   border-radius: 7px;
+  border: 4px solid black;
 `
 
 const StyledContainerDaysButton = styled.div`
   font-size: 1.5em;
-  margin: 1em;
+  margin-bottom: 2em;
 `
 
 const StyledDaysButton = styled.button`
+  color: white;
   font-size: 1em;
   margin: 5px;
   width: 70px;
@@ -42,7 +44,7 @@ const StyledDaysButton = styled.button`
   &:hover {
     background-color: #faca21;
   }
-  background-color: ${({ isActive }) => (isActive ? 'hotpink' : 'grey')};
+  background-color: ${({ isActive }) => (isActive ? 'hotpink' : 'black')};
 `
 
 function AddHabitTwo() {
@@ -119,6 +121,7 @@ function AddHabitTwo() {
           id="new-todo-input"
           autoComplete="off"
         />
+        <h2>Quand voulez vous suivre votre objectif ? </h2>
         <StyledContainerDaysButton>
           {weekdays.map((day) => (
             <StyledDaysButton

@@ -23,10 +23,40 @@ const MainStyled = styled.main`
   justify-content: center;
   height: 100vh;
 `
-const StyledDiv = styled.div`
+const StyledDivHomeWithNoData = styled.div`
   text-align: center;
   margin: 1em;
   font-size: 1.5em;
+`
+
+const StyledDivContainerNoData = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+const StyledDaysButton = styled.button`
+  color: white;
+  background-color: black;
+  font-size: 1.5em;
+  margin: 5px;
+  width: 70px;
+  height: 70px;
+  border-radius: 30%;
+  &:hover {
+    background-color: #faca21;
+  }
+`
+
+const StyledDivOfCurrentDay = styled.div`
+  text-align: center;
+  margin: 1em;
+  font-size: 1.5em;
+`
+
+const UlTaskList = styled.div`
+  text-align: center;
 `
 
 function Home() {
@@ -119,19 +149,23 @@ function Home() {
 
     return (
       <div>
-        <div className="grid-container">
-          {weekdays.map((day) => (
-            <button
-              onClick={() => handleDayClick(day)}
-              key={day}
-              className="grid-item"
-            >
-              {day.format('ddd')}
-            </button>
-          ))}
-          {selectedDate && <div>{selectedDate}</div>}
-          <ul>{taskLists}</ul>
-        </div>
+        <StyledDivContainerNoData>
+          <div>
+            {weekdays.map((day) => (
+              <StyledDaysButton
+                onClick={() => handleDayClick(day)}
+                key={day}
+                className="grid-item"
+              >
+                {day.format('ddd')}
+              </StyledDaysButton>
+            ))}
+          </div>
+          {selectedDate && (
+            <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
+          )}
+          <UlTaskList>{taskLists}</UlTaskList>
+        </StyledDivContainerNoData>
       </div>
     )
   }
@@ -159,10 +193,10 @@ function Home() {
         <HomeContainer>
           <Header />
           <MainStyled>
-            <StyledDiv>
+            <StyledDivHomeWithNoData>
               Crée une habitude personnalisée dès maintenant afin
               <br /> de suivre et d'accomplir tes objectifs :
-            </StyledDiv>
+            </StyledDivHomeWithNoData>
 
             <Link to="/AddHabitOne">
               <Button>Click me!</Button>
