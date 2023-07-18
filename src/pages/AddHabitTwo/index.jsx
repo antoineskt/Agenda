@@ -33,22 +33,22 @@ const StyledContainerDaysButton = styled.div`
   margin: 1em;
 `
 
+const StyledDaysButton = styled.button`
+  font-size: 1em;
+  margin: 5px;
+  width: 70px;
+  height: 70px;
+  border-radius: 30%;
+  &:hover {
+    background-color: #faca21;
+  }
+  background-color: ${({ isActive }) => (isActive ? 'hotpink' : 'grey')};
+`
+
 function AddHabitTwo() {
   const [name, setName] = useState('')
-  const [blueColor, setBlueColor] = useState('white')
-  const [selectedDate, setSelectedDate] = useState(null)
 
-  const StyledDaysButton = styled.button`
-    font-size: 1em;
-    margin: 5px;
-    width: 70px;
-    height: 70px;
-    border-radius: 30%;
-    &:hover {
-      background-color: #faca21;
-    }
-    background-color: ${blueColor};
-  `
+  const [selectedDate, setSelectedDate] = useState([])
 
   const startOfWeek = dayjs().startOf('week')
 
@@ -57,14 +57,26 @@ function AddHabitTwo() {
     .map((day, idx) => day.add(idx, 'day'))
 
   const handleDayClick = (day) => {
-    const blue = '#0000FF'
-    setBlueColor(blue)
     const formattedDate = day.format('dddd D MMMM')
-    if (selectedDate !== null) {
-      const multipleDate = [...selectedDate, formattedDate]
-      setSelectedDate(multipleDate)
+    const coucou = 'coucou'
+    console.log(typeof formattedDate)
+    console.log(formattedDate)
+    console.log(coucou)
+
+    if (selectedDate.length > 0) {
+      console.log(selectedDate.length)
+      if (selectedDate.length > 10) {
+        console.log('length1 : ' + selectedDate)
+        const multipleDate = [...[selectedDate], formattedDate]
+        setSelectedDate(multipleDate)
+      } else {
+        const multipleDate = [...selectedDate, formattedDate]
+        console.log(multipleDate)
+        setSelectedDate(multipleDate)
+      }
+    } else {
+      setSelectedDate(formattedDate)
     }
-    setSelectedDate(formattedDate)
   }
 
   function handleInput(e) {
@@ -109,7 +121,15 @@ function AddHabitTwo() {
         />
         <StyledContainerDaysButton>
           {weekdays.map((day) => (
-            <StyledDaysButton onClick={() => handleDayClick(day)} key={day}>
+            <StyledDaysButton
+              type="button"
+              onClick={() => handleDayClick(day)}
+              key={day}
+              isActive={
+                selectedDate.length > 0 &&
+                selectedDate.includes(day.format('dddd D MMMM'))
+              }
+            >
               {day.format('ddd')}
             </StyledDaysButton>
           ))}

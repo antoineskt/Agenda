@@ -101,7 +101,10 @@ function Home() {
       return <div>No items found.</div>
     }
     console.log(typeof items) // ici items est un object mais il map qd mm ?
-    const filteredTasks = items.filter((task) => task.date === selectedDate)
+
+    const filteredTasks = items.filter((task) =>
+      task.date.includes(selectedDate)
+    )
     const taskLists = filteredTasks.map((task) => (
       <Todo
         id={task.id}
