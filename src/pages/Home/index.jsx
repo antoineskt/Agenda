@@ -4,6 +4,13 @@ import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Todo from '../../components/Todo'
+import dayjs from 'dayjs'
+import fr from 'dayjs/locale/fr'
+
+dayjs.locale({
+  ...fr,
+  weekStart: 1,
+})
 
 const HomeContainer = styled.div`
   margin: 0;
@@ -25,6 +32,18 @@ const StyledDiv = styled.div`
 function Home() {
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true) // New state variable
+  const [selectedDate, setSelectedDate] = useState(null)
+
+  const startOfWeek = dayjs().startOf('week')
+
+  const weekdays = new Array(7)
+    .fill(startOfWeek)
+    .map((day, idx) => day.add(idx, 'day'))
+
+  const handleDayClick = (day) => {
+    const formattedDate = day.format('dddd D MMMM')
+    setSelectedDate(formattedDate)
+  }
 
   const getData = async () => {
     const datas = await JSON.parse(localStorage.getItem('todos'))
@@ -82,7 +101,8 @@ function Home() {
       return <div>No items found.</div>
     }
     console.log(typeof items) // ici items est un object mais il map qd mm ?
-    const taskLists = items.map((task) => (
+    const filteredTasks = items.filter((task) => task.date === selectedDate)
+    const taskLists = filteredTasks.map((task) => (
       <Todo
         id={task.id}
         name={task.name}
@@ -96,7 +116,19 @@ function Home() {
 
     return (
       <div>
-        <ul>{taskLists}</ul>
+        <div className="grid-container">
+          {weekdays.map((day) => (
+            <button
+              onClick={() => handleDayClick(day)}
+              key={day}
+              className="grid-item"
+            >
+              {day.format('ddd')}
+            </button>
+          ))}
+          {selectedDate && <div>{selectedDate}</div>}
+          <ul>{taskLists}</ul>
+        </div>
       </div>
     )
   }
