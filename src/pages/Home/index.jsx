@@ -94,7 +94,11 @@ function Home() {
       />
     ))
 
-    return <ul>{taskLists}</ul>
+    return (
+      <div>
+        <ul>{taskLists}</ul>
+      </div>
+    )
   }
 
   if (isLoading) {
