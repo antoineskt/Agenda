@@ -63,6 +63,7 @@ function Home() {
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true) // New state variable
   const [selectedDate, setSelectedDate] = useState(null)
+  const [count, setCount] = useState(0)
 
   const startOfWeek = dayjs().startOf('week')
 
@@ -75,8 +76,8 @@ function Home() {
     setSelectedDate(formattedDate)
   }
 
-  const getData = async () => {
-    const datas = await JSON.parse(localStorage.getItem('todos'))
+  const getData = () => {
+    const datas = JSON.parse(localStorage.getItem('todos'))
     console.log('je log les datas(homepage) : ' + JSON.stringify(datas))
     if (datas) {
       setItems(datas)
@@ -107,19 +108,17 @@ function Home() {
     localStorage.setItem('todos', JSON.stringify(editedTaskList))
   }
 
-  function toggleTaskCompleted(id) {
-    const updatedTasks = items.map((task) => {
-      // si cette tâche possède le même identifiant que la tâche éditée
+  function serieCount(id) {
+    const serieTaskList = items.map((task) => {
       if (id === task.id) {
-        // on utilise la décomposition objet afin
-        // de construire un nouvel objet dont la
-        // propriété `completed` est l'inverse
-        return { ...task, completed: !task.completed }
+        const newCount = task.serie + 1
+        return { ...task, serie: newCount }
       }
       return task
     })
-    setItems(updatedTasks)
-    localStorage.setItem('todos', JSON.stringify(updatedTasks))
+
+    setItems(serieTaskList)
+    localStorage.setItem('todos', JSON.stringify(serieTaskList))
   }
 
   function TodoHomePage() {
@@ -142,8 +141,8 @@ function Home() {
         key={task.id}
         deleteTask={deleteTask}
         editTask={editTask}
-        completed={task.completed}
-        toggleTaskCompleted={toggleTaskCompleted}
+        serieCount={serieCount}
+        serie={task.serie}
       />
     ))
 
@@ -194,7 +193,7 @@ function Home() {
           <Header />
           <MainStyled>
             <StyledDivHomeWithNoData>
-              Créee une habitude personnalisée dès maintenant afin
+              Crée une habitude personnalisée dès maintenant afin
               <br /> de suivre et d'accomplir tes objectifs :
             </StyledDivHomeWithNoData>
 

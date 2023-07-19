@@ -91,8 +91,8 @@ function AddHabitTwo() {
       const newDatas = {
         id: `todo-${nanoid()}`,
         name: name,
-        completed: false,
         date: selectedDate,
+        serie: 0,
       }
       const getDataFromLS = JSON.parse(localStorage.getItem('todos'))
       if (getDataFromLS) {

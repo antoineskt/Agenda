@@ -13,85 +13,8 @@ const StyledLabel = styled.label`
   font-size: 3em;
 `
 
-const StyledInput = styled.input`
-  height: 0;
-  width: 0;
-  > * &[type='checkbox'] {
-    box-sizing: border-box;
-    top: 20px;
-    left: 20px;
-    width: 44px;
-    height: 44px;
-  }
-  &:checked + ${StyledLabel}::after {
-    opacity: 1;
-  }
-`
-const StyledDivCheckBox = styled.div`
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-  font-weight: 400;
-  font-size: 1.6rem;
-  line-height: 1.25;
-  display: block;
-  position: relative;
-  min-height: 44px;
-  padding-left: 40px;
-
-  > ${StyledLabel} {
-    &:before {
-      box-sizing: border-box;
-      top: 20px;
-      left: 20px;
-      width: 44px;
-      height: 44px;
-
-      content: '';
-      position: absolute;
-      border: 2px solid currentcolor;
-      background: transparent;
-    }
-    font-size: inherit;
-    font-family: inherit;
-    line-height: inherit;
-    display: inline-block;
-    margin-bottom: 0;
-    padding: 8px 15px 5px;
-    cursor: pointer;
-    touch-action: manipulation;
-
-    &:after {
-      box-sizing: content-box;
-      content: '';
-      position: absolute;
-      top: 33px;
-      left: 33px;
-      width: 18px;
-      height: 7px;
-      transform: rotate(-45deg);
-      border: solid;
-      border-width: 0 0 5px 5px;
-      border-top-color: transparent;
-      opacity: 0;
-      background: transparent;
-    }
-  }
-
-  > ${StyledInput} {
-    &[type='checkbox'] {
-      box-sizing: border-box;
-      top: 20px;
-      left: 20px;
-      width: 44px;
-      height: 44px;
-
-      cursor: pointer;
-      position: absolute;
-      z-index: 1;
-      margin: 0;
-      opacity: 0;
-    }
-  }
+const StyledDivCount = styled.div`
+  font-size: 1.2em;
 `
 
 const StyledInputEditTemplate = styled.input`
@@ -149,15 +72,10 @@ export default function ToDo(props) {
 
   const normalTemplate = (
     <StyledDiv>
-      <StyledDivCheckBox>
-        <StyledInput
-          type="checkbox"
-          id={props.id}
-          defaultChecked={props.completed}
-          onChange={() => props.toggleTaskCompleted(props.id)}
-        />
-        <StyledLabel htmlFor={props.id}>{props.name}</StyledLabel>
-      </StyledDivCheckBox>
+      <StyledDivCount>🔥 {props.serie} Jours</StyledDivCount>
+
+      <StyledLabel htmlFor={props.id}>{props.name}</StyledLabel>
+
       <StyledDivEditDeleteButton>
         <StyledButton type="button" onClick={() => setEditing(true)}>
           Edit
@@ -172,9 +90,7 @@ export default function ToDo(props) {
         classList="my-class"
         caretClassList="my-caret-class"
         overlayClassList="my-overlay-class"
-        onSlideDone={function () {
-          console.log('Done!')
-        }}
+        onSlideDone={() => props.serieCount(props.id)}
       />
     </StyledDiv>
   )
