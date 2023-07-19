@@ -62,8 +62,9 @@ const UlTaskList = styled.div`
 function Home() {
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true) // New state variable
-  const [selectedDate, setSelectedDate] = useState(null)
-  const [count, setCount] = useState(0)
+  const [selectedDate, setSelectedDate] = useState(
+    dayjs().format('dddd D MMMM')
+  ) // Initialize with the current date)
 
   const startOfWeek = dayjs().startOf('week')
 
@@ -73,6 +74,7 @@ function Home() {
 
   const handleDayClick = (day) => {
     const formattedDate = day.format('dddd D MMMM')
+
     setSelectedDate(formattedDate)
   }
 
