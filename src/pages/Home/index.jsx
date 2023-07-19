@@ -194,7 +194,7 @@ function Home() {
           <Header />
           <MainStyled>
             <StyledDivHomeWithNoData>
-              Crée une habitude personnalisée dès maintenant afin
+              Créee une habitude personnalisée dès maintenant afin
               <br /> de suivre et d'accomplir tes objectifs :
             </StyledDivHomeWithNoData>
 

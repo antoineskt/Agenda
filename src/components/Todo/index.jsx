@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-
+import SlideButton from 'react-slide-button'
 import styled from 'styled-components'
+import './todo.css'
 
 const StyledDiv = styled.div`
   margin: 20px;
@@ -165,6 +166,16 @@ export default function ToDo(props) {
           Delete
         </StyledButton>
       </StyledDivEditDeleteButton>
+      <SlideButton
+        mainText="Swipe me"
+        overlayText="Bravo"
+        classList="my-class"
+        caretClassList="my-caret-class"
+        overlayClassList="my-overlay-class"
+        onSlideDone={function () {
+          console.log('Done!')
+        }}
+      />
     </StyledDiv>
   )
   return (
