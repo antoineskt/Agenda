@@ -111,6 +111,7 @@ function Home() {
   }
 
   function serieCount(id) {
+    alert('Félicitations vous avez accomplis votre objectif')
     const serieTaskList = items.map((task) => {
       if (id === task.id) {
         const newCount = task.serie + 1
