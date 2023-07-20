@@ -12,22 +12,31 @@ const MainStyled = styled.main`
   height: 100vh;
 `
 
+const StyledDivModele = styled.div`
+  font-size: 2em;
+  margin-top: 1em;
+  /* Media query pour un écran de 768px ou moins */
+  @media (max-width: 768px) {
+    font-size: 1em;
+  }
+`
+
 function AddHabitOne() {
   return (
     <div>
       <Header />
       <MainStyled>
         <Link to="/AddHabitTwo">
-          <Button>Crée une habitude personnalisée</Button>
+          <Button>Créer un objectif personnalisée</Button>
         </Link>
-        <div>Ou utilise un modèle :</div>
-        <Link to="/AddHabitTwo">
+        <StyledDivModele>Ou utilise un modèle :</StyledDivModele>
+        <Link to="/AddHabitTwo?habit=Running">
           <Button>Running</Button>
         </Link>
-        <Link to="/AddHabitTwo">
+        <Link to="/AddHabitTwo?habit=Workout">
           <Button>Workout</Button>
         </Link>
-        <Link to="/AddHabitTwo">
+        <Link to="/AddHabitTwo?habit=Arrête%20de%20fumer">
           <Button>Arrête de fumer</Button>
         </Link>
       </MainStyled>

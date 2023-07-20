@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import Header from '../../components/Header'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
@@ -21,6 +22,10 @@ const StyledContaineur = styled.div`
 
 const StyledH1 = styled.h1`
   font-size: 4em;
+  /* Media query pour un écran de 768px ou moins */
+  @media (max-width: 768px) {
+    font-size: 1.5em;
+  }
 `
 
 const StyledInput = styled.input`
@@ -52,6 +57,16 @@ function AddHabitTwo() {
 
   const [selectedDate, setSelectedDate] = useState([])
 
+  // Read the URL parameters on page load
+  const location = useLocation()
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const habitName = params.get('habit')
+    if (habitName) {
+      setName(habitName)
+    }
+  }, [location])
+
   const startOfWeek = dayjs().startOf('week')
 
   const weekdays = new Array(7)
@@ -60,10 +75,6 @@ function AddHabitTwo() {
 
   const handleDayClick = (day) => {
     const formattedDate = day.format('dddd D MMMM')
-    const coucou = 'coucou'
-    console.log(typeof formattedDate)
-    console.log(formattedDate)
-    console.log(coucou)
 
     if (selectedDate.length > 0) {
       console.log(selectedDate.length)

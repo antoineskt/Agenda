@@ -26,7 +26,11 @@ const MainStyled = styled.main`
 const StyledDivHomeWithNoData = styled.div`
   text-align: center;
   margin: 1em;
-  font-size: 1.5em;
+  font-size: 3em;
+  /* Media query pour un écran de 768px ou moins */
+  @media (max-width: 768px) {
+    font-size: 1.5em;
+  }
 `
 
 const StyledDivContainerNoData = styled.div`
@@ -47,12 +51,23 @@ const StyledDaysButton = styled.button`
   &:hover {
     background-color: #faca21;
   }
+  /* Media query pour un écran de 768px ou moins */
+  @media (max-width: 768px) {
+    font-size: 0.8em;
+    margin: 3px;
+    width: 40px;
+    height: 40px;
+  }
 `
 
 const StyledDivOfCurrentDay = styled.div`
   text-align: center;
   margin: 1em;
   font-size: 1.5em;
+  /* Media query pour un écran de 768px ou moins */
+  @media (max-width: 768px) {
+    font-size: 1em;
+  }
 `
 
 const UlTaskList = styled.div`
@@ -196,7 +211,7 @@ function Home() {
           <Header />
           <MainStyled>
             <StyledDivHomeWithNoData>
-              Crée une habitude personnalisée dès maintenant afin
+              Créer une habitude personnalisée dès maintenant afin
               <br /> de suivre et d'accomplir tes objectifs :
             </StyledDivHomeWithNoData>
 
