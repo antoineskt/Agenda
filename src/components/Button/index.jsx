@@ -1,14 +1,14 @@
 import styled from 'styled-components'
 
 const StyledButton = styled.button`
-  padding: 0.2em 0.5em;
-  width: 26em;
-  height: 8.4em;
+  padding: 0.15em 0.35em;
+  width: 19.5em;
+  height: 5.9em;
   background-color: #212121;
-  border: 0.16em solid #fff;
-  border-radius: 0.6em;
-  font-size: 24px;
-  margin: 1.2em;
+  border: 0.12em solid #fff;
+  border-radius: 0.45em;
+  font-size: 18px;
+  margin: 0.9em;
   /* Media query pour un écran de 768px ou moins */
   @media (max-width: 768px) {
     padding: 0.1em 0.25em;
@@ -27,18 +27,18 @@ const StyledSpan = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  bottom: 0.8em;
-  width: 16.5em;
-  height: 5em;
+  bottom: 0.6em;
+  width: 12.5em;
+  height: 3.625em;
   background-color: #212121;
-  border-radius: 0.4em;
+  border-radius: 0.3em;
   font-size: 1.5em;
   color: #fff;
   border: 0.16em solid #fff;
-  box-shadow: 0 0.8em 0.2em 0.038em #fff;
+  box-shadow: 0 0.6em 0.15em 0.03em #fff;
   &:hover {
     transition: all 0.5s;
-    transform: translate(0, 0.8em);
+    transform: translate(0, 0.6em);
     box-shadow: 0 0 0 0 #fff;
   }
   &:not(hover) {
