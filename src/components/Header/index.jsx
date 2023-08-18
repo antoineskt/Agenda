@@ -29,6 +29,9 @@ function Header() {
         <li>
           <StyledLink to="/Stats">Statistiques</StyledLink>
         </li>
+        <li>
+          <StyledLink to="/CalendarPage">Calendrier</StyledLink>
+        </li>
       </ul>
     </nav>
   )
