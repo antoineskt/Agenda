@@ -18,11 +18,11 @@ const CalendarContainer = styled.div`
   max-width: 600px;
 `
 
-const CalendarDayButton = styled.button`
+const DayButton = styled.button`
   padding: 10px;
   text-align: center;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  background-color: ${(props) => (props.highlight ? '#FFD700' : '#f0f0f0')};
+  border: #ccc;
   cursor: pointer;
 
   &:hover {
@@ -50,15 +50,20 @@ const DayOfWeekNames = [
   'Dimanche',
 ]
 
-export default function Calendar() {
+export default function Calendar({ sendItems }) {
   const startOfMonth = dayjs().startOf('month')
   const startOfWeek = startOfMonth.startOf('week')
   const daysInCalendar = 5 * 7
+  //on map les items pour avoir les dates, puis on jointe pour correspondre au format
+  const formattedDates = sendItems.map((task) => `'${task.date}'`).join(',')
+  console.log(formattedDates)
 
   const daysArray = new Array(daysInCalendar)
     .fill(startOfWeek)
     .map((day, idx) => day.add(idx, 'day'))
 
+  const daysArrayFormatted = daysArray.map((day) => day.format('dddd D MMMM'))
+  console.log(daysArrayFormatted)
   return (
     <div>
       <MonthTitle>{startOfMonth.format('MMMM YYYY')}</MonthTitle>
@@ -67,7 +72,12 @@ export default function Calendar() {
           <DayOfWeekHeader key={dayName}>{dayName}</DayOfWeekHeader>
         ))}
         {daysArray.map((day) => (
-          <CalendarDayButton key={day}>{day.format('D')}</CalendarDayButton>
+          <DayButton
+            key={day}
+            highlight={formattedDates.includes(day.format('dddd D MMMM'))}
+          >
+            {day.format('D')}
+          </DayButton>
         ))}
       </CalendarContainer>
     </div>

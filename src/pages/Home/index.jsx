@@ -32,14 +32,12 @@ const StyledDivHomeWithNoData = styled.div`
     font-size: 1.5em;
   }
 `
-
 const StyledDivContainerNoData = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `
-
 const StyledDaysButton = styled.button`
   color: white;
   background-color: black;
@@ -149,9 +147,12 @@ function Home() {
     }
     console.log(typeof items) // ici items est un object mais il map qd mm ?
 
-    const filteredTasks = items.filter((task) =>
-      task.date.includes(selectedDate)
+    //retourne un nv tablo d'une ou pls taches ayant la mm date que celle selectionné
+    //on vérifie pr chaque tache si elle contient la date
+    const filteredTasks = items.filter(
+      (task) => task.date.includes(selectedDate) //Une des dates des taches inclut elle la date selectionné ?
     )
+    //on map ce tableau d'une ou plusieurs taches
     const taskLists = filteredTasks.map((task) => (
       <Todo
         id={task.id}
@@ -169,11 +170,7 @@ function Home() {
         <StyledDivContainerNoData>
           <div>
             {weekdays.map((day) => (
-              <StyledDaysButton
-                onClick={() => handleDayClick(day)}
-                key={day}
-                className="grid-item"
-              >
+              <StyledDaysButton onClick={() => handleDayClick(day)} key={day}>
                 {day.format('ddd')}
               </StyledDaysButton>
             ))}
@@ -191,10 +188,6 @@ function Home() {
     return <div>is loading..</div>
   } else {
     if (items.length !== 0) {
-      console.log(
-        'il y a des items ds le local storage, donc on affiche la page toDo'
-      )
-
       return (
         <HomeContainer>
           <Header />
@@ -203,9 +196,6 @@ function Home() {
         </HomeContainer>
       )
     } else {
-      console.log(
-        "pas d'items dans le local storage, on affiche la page d'accueil avec le bouton"
-      )
       return (
         <HomeContainer>
           <Header />
