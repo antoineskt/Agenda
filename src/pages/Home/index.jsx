@@ -21,12 +21,12 @@ const MainStyled = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  margin-top: 50px;
 `
 const StyledDivHomeWithNoData = styled.div`
   text-align: center;
-  margin: 1em;
-  font-size: 3em;
+  margin-bottom: 20px;
+  font-size: 2em;
   /* Media query pour un écran de 768px ou moins */
   @media (max-width: 768px) {
     font-size: 1.5em;

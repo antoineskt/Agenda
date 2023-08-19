@@ -9,15 +9,24 @@ const MainStyled = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  padding-top: 50px;
 `
 
 const StyledDivModele = styled.div`
-  font-size: 2em;
-  margin-top: 1em;
+  font-size: 1.5em;
+  margin-top: 0.2em;
+  margin-bottom: 20px;
   /* Media query pour un écran de 768px ou moins */
   @media (max-width: 768px) {
-    font-size: 1em;
+    font-size: 0.8em;
+  }
+`
+
+const Div = styled.div`
+  display: flex;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
   }
 `
 
@@ -30,15 +39,17 @@ function AddHabitOne() {
           <Button>Créer un objectif personnalisée</Button>
         </Link>
         <StyledDivModele>Ou utilise un modèle :</StyledDivModele>
-        <Link to="/AddHabitTwo?habit=Running">
-          <Button>Running</Button>
-        </Link>
-        <Link to="/AddHabitTwo?habit=Workout">
-          <Button>Workout</Button>
-        </Link>
-        <Link to="/AddHabitTwo?habit=Arrête%20de%20fumer">
-          <Button>Arrête de fumer</Button>
-        </Link>
+        <Div>
+          <Link to="/AddHabitTwo?habit=Running">
+            <Button>Running</Button>
+          </Link>
+          <Link to="/AddHabitTwo?habit=Workout">
+            <Button>Workout</Button>
+          </Link>
+          <Link to="/AddHabitTwo?habit=Arrête%20de%20fumer">
+            <Button>Arrête de fumer</Button>
+          </Link>
+        </Div>
       </MainStyled>
     </div>
   )

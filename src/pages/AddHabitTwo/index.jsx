@@ -21,7 +21,7 @@ const StyledContaineur = styled.div`
 `
 
 const StyledH1 = styled.h1`
-  font-size: 4em;
+  font-size: 3em;
   /* Media query pour un écran de 768px ou moins */
   @media (max-width: 768px) {
     font-size: 1.5em;

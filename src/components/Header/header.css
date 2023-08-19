@@ -1,131 +1,105 @@
-
-
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-	
 
-body{margin:0;font-family:system-ui}	
-	
-nav {
-	
-padding: 40px;	
-background: #faca21;
-display:flex;
-justify-content: flex-end
-	
-}	
-	
-	
-nav input {
-
-display: grid;
-width: 40px;
-aspect-ratio: 1;
-overflow: hidden;
--webkit-appearance: none;
-appearance: none;
-cursor: pointer;
-	
+body {
+  margin: 0;
+  font-family: system-ui;
 }
-	
+
+nav {
+  padding: 20px;
+  background: #faca21;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav input {
+  display: grid;
+  width: 40px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
 nav input::before,
 nav input::after {
-	
-content: "";
-grid-area: 1/1;
-transition: .3s;
-z-index:1;
-	
+  content: '';
+  grid-area: 1/1;
+  transition: 0.3s;
+  z-index: 1;
 }
-	
+
 nav input::before {
+  background: radial-gradient(closest-side at 12.5% 25%, #fff 96%, #0000) 0 0/80%
+      40%,
+    linear-gradient(#fff 50%, #0000 0) top/80% 40% repeat-y;
+}
 
-background:
-radial-gradient(closest-side at 12.5% 25%,#fff 96%,#0000) 0 0/80% 40%,
-linear-gradient(#fff 50%,#0000 0) top/80% 40% repeat-y;
-	
-	}
-	
 nav input::after {
-	
-padding: 10%;
-background: radial-gradient(closest-side at 50% 12.5%,#fff 96%,#0000) top /20% 80% repeat-y,
-radial-gradient(closest-side at 12.5% 50%,#fff 96%,#0000) left/80% 20% repeat-x,
-conic-gradient(from 90deg at 33% 33%, #0000 90deg, #fff 0)
-100% 100%/60% 60% padding-box content-box;
-transform: rotate(45deg);
-opacity:0;
-	
-}	
-	
+  padding: 10%;
+  background: radial-gradient(closest-side at 50% 12.5%, #fff 96%, #0000) top /
+      20% 80% repeat-y,
+    radial-gradient(closest-side at 12.5% 50%, #fff 96%, #0000) left/80% 20%
+      repeat-x,
+    conic-gradient(from 90deg at 33% 33%, #0000 90deg, #fff 0) 100% 100%/60% 60%
+      padding-box content-box;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+
 nav input:checked::before {
-	
   transform: translate(100%);
-  opacity:0;
+  opacity: 0;
 }
-	
+
 nav input:checked::after {
-  
-  opacity:1;
+  opacity: 1;
 }
-	
-	
-	
-  
+
 ul {
-	
-margin: 10;
-padding: 0;
-list-style-type: none;
-position: fixed; 
-background: inherit; /*hérite du background du parent (nav)*/
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;/*inset: 0*/
-display: flex;
-flex-flow: column;
-align-items: center;
+  z-index: 10;
+  margin: 10;
+  padding: 0;
+  list-style-type: none;
+  position: fixed;
+  background: inherit; /*hérite du background du parent (nav)*/
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; /*inset: 0*/
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 
-row-gap: 30px;
-transform: translate(-100%);
-will-change: transform,opacity;
-opacity: 0;
-transition: .3s;
-	
-  }
-	
-
-  
-nav input:checked + ul {
-
-transform: unset;
-opacity: 1;
-	
-  }
-		
-/* si l'écran fait plus de 37.5rem, n'affiche pas le input */
-@media (min-width:37.5rem) {
-	
-nav input{
-	
-display:none
-	
-	}
-	
-ul{
-
-opacity: 1;
-transform: unset;
-gap: unset;
-position: initial;
-flex-flow: initial;
-margin-left: auto;
- 
+  row-gap: 30px;
+  transform: translate(-100%);
+  will-change: transform, opacity;
+  opacity: 0;
+  transition: 0.3s;
 }
 
-}	
+nav input:checked + ul {
+  transform: unset;
+  opacity: 1;
+}
 
+/* si l'écran fait plus de 37.5rem, n'affiche pas le input */
+@media (min-width: 37.5rem) {
+  nav input {
+    display: none;
+  }
+
+  ul {
+    opacity: 1;
+    transform: unset;
+    gap: unset;
+    position: initial;
+    flex-flow: initial;
+    margin-left: auto;
+  }
+}
