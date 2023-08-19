@@ -32,7 +32,7 @@ const StyledDivEditDeleteButton = styled.div`
   justify-content: center;
 `
 
-export default function ToDo(props) {
+export default function TodoWhithoutSwipe(props) {
   const [isEditing, setEditing] = useState(false)
   const [newName, setNewName] = useState('')
 

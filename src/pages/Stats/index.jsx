@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import Header from '../../components/Header'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import TodoStat from '../../components/TodoStat'
+import TodoWhithoutSwipe from '../../components/TodoWhitoutSwipe'
+import { useData } from '../../utils/Datas'
 
 const HomeContainer = styled.div`
   margin: 0;
@@ -34,53 +34,11 @@ const UlTaskList = styled.div`
 `
 
 function Stats() {
-  const [items, setItems] = useState([])
-  const [isLoading, setIsLoading] = useState(true) // New state variable
-
-  const getData = () => {
-    const datas = JSON.parse(localStorage.getItem('todos'))
-    console.log('je log les datas(homepage) : ' + JSON.stringify(datas))
-    if (datas) {
-      setItems(datas)
-    }
-    setIsLoading(false) // Mark data loading as complete
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
-
-  function deleteTask(id) {
-    const remainingTasks = items.filter((task) => id !== task.id)
-    setItems(remainingTasks)
-    localStorage.setItem('todos', JSON.stringify(remainingTasks))
-  }
-
-  function editTask(id, newName) {
-    const editedTaskList = items.map((task) => {
-      // if this task has the same ID as the edited task
-      if (id === task.id) {
-        //
-        return { ...task, name: newName }
-      }
-      return task
-    })
-    setItems(editedTaskList)
-    localStorage.setItem('todos', JSON.stringify(editedTaskList))
-  }
+  const { items, isLoading, deleteTask, editTask } = useData()
 
   function TodoStatPage() {
-    if (isLoading) {
-      return <div>Loading...</div> // Display a loading message while data is being fetched
-    }
-
-    if (items.length < 1) {
-      return <div>No items found.</div>
-    }
-    console.log(typeof items) // ici items est un object mais il map qd mm ?
-
     const taskLists = items.map((task) => (
-      <TodoStat
+      <TodoWhithoutSwipe
         id={task.id}
         name={task.name}
         key={task.id}

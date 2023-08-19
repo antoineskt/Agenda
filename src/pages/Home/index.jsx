@@ -1,11 +1,12 @@
-import styled from 'styled-components'
+import { useState } from 'react'
 import Header from '../../components/Header'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import Todo from '../../components/Todo'
+import styled from 'styled-components'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
+import { useData } from '../../utils/Datas'
+import TaskList from '../../components/TaskList'
 
 dayjs.locale({
   ...fr,
@@ -32,6 +33,7 @@ const StyledDivHomeWithNoData = styled.div`
     font-size: 1.5em;
   }
 `
+
 const StyledDivContainerNoData = styled.div`
   display: flex;
   flex-direction: column;
@@ -72,9 +74,9 @@ const UlTaskList = styled.div`
   text-align: center;
 `
 
-function Home() {
-  const [items, setItems] = useState([])
-  const [isLoading, setIsLoading] = useState(true) // New state variable
+export default function Home() {
+  const { items, isLoading, deleteTask, editTask, serieCount } = useData()
+
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format('dddd D MMMM')
   ) // Initialize with the current date)
@@ -91,112 +93,36 @@ function Home() {
     setSelectedDate(formattedDate)
   }
 
-  const getData = () => {
-    const datas = JSON.parse(localStorage.getItem('todos'))
-    console.log('je log les datas(homepage) : ' + JSON.stringify(datas))
-    if (datas) {
-      setItems(datas)
-    }
-    setIsLoading(false) // Mark data loading as complete
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
-
-  function deleteTask(id) {
-    const remainingTasks = items.filter((task) => id !== task.id)
-    setItems(remainingTasks)
-    localStorage.setItem('todos', JSON.stringify(remainingTasks))
-  }
-
-  function editTask(id, newName) {
-    const editedTaskList = items.map((task) => {
-      // if this task has the same ID as the edited task
-      if (id === task.id) {
-        //
-        return { ...task, name: newName }
-      }
-      return task
-    })
-    setItems(editedTaskList)
-    localStorage.setItem('todos', JSON.stringify(editedTaskList))
-  }
-
-  function serieCount(id) {
-    alert('Félicitations vous avez accomplis votre objectif')
-    const serieTaskList = items.map((task) => {
-      if (id === task.id) {
-        const newCount = task.serie + 1
-        return { ...task, serie: newCount }
-      }
-      return task
-    })
-
-    setItems(serieTaskList)
-    localStorage.setItem('todos', JSON.stringify(serieTaskList))
-  }
-
-  function TodoHomePage() {
-    if (isLoading) {
-      return <div>Loading...</div> // Display a loading message while data is being fetched
-    }
-
-    if (items.length < 1) {
-      return <div>No items found.</div>
-    }
-    console.log(typeof items) // ici items est un object mais il map qd mm ?
-
-    //retourne un nv tablo d'une ou pls taches ayant la mm date que celle selectionné
-    //on vérifie pr chaque tache si elle contient la date
-    const filteredTasks = items.filter(
-      (task) => task.date.includes(selectedDate) //Une des dates des taches inclut elle la date selectionné ?
-    )
-    //on map ce tableau d'une ou plusieurs taches
-    const taskLists = filteredTasks.map((task) => (
-      <Todo
-        id={task.id}
-        name={task.name}
-        key={task.id}
-        deleteTask={deleteTask}
-        editTask={editTask}
-        serieCount={serieCount}
-        serie={task.serie}
-      />
-    ))
-
-    return (
-      <div>
-        <StyledDivContainerNoData>
-          <div>
-            {weekdays.map((day) => (
-              <StyledDaysButton onClick={() => handleDayClick(day)} key={day}>
-                {day.format('ddd')}
-              </StyledDaysButton>
-            ))}
-          </div>
-          {selectedDate && (
-            <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
-          )}
-          <UlTaskList>{taskLists}</UlTaskList>
-        </StyledDivContainerNoData>
-      </div>
-    )
-  }
-
-  if (isLoading) {
-    return <div>is loading..</div>
-  } else {
-    if (items.length !== 0) {
-      return (
+  return (
+    <div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : items.length !== 0 ? (
         <HomeContainer>
           <Header />
-
-          <TodoHomePage />
+          <StyledDivContainerNoData>
+            <div>
+              {weekdays.map((day) => (
+                <StyledDaysButton onClick={() => handleDayClick(day)} key={day}>
+                  {day.format('ddd')}
+                </StyledDaysButton>
+              ))}
+            </div>
+            {selectedDate && (
+              <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
+            )}
+            <UlTaskList>
+              <TaskList
+                items={items}
+                selectedDate={selectedDate}
+                deleteTask={deleteTask}
+                editTask={editTask}
+                serieCount={serieCount}
+              />
+            </UlTaskList>
+          </StyledDivContainerNoData>
         </HomeContainer>
-      )
-    } else {
-      return (
+      ) : (
         <HomeContainer>
           <Header />
           <MainStyled>
@@ -210,9 +136,7 @@ function Home() {
             </Link>
           </MainStyled>
         </HomeContainer>
-      )
-    }
-  }
+      )}
+    </div>
+  )
 }
-
-export default Home
