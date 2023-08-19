@@ -7,6 +7,7 @@ import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
 import { useData } from '../../utils/Datas'
 import TaskList from '../../components/TaskList'
+import DateSelector from '../../components/DateSelector'
 
 dayjs.locale({
   ...fr,
@@ -40,25 +41,6 @@ const StyledDivContainerNoData = styled.div`
   justify-content: center;
   align-items: center;
 `
-const StyledDaysButton = styled.button`
-  color: white;
-  background-color: black;
-  font-size: 1.5em;
-  margin: 5px;
-  width: 70px;
-  height: 70px;
-  border-radius: 30%;
-  &:hover {
-    background-color: #faca21;
-  }
-  /* Media query pour un écran de 768px ou moins */
-  @media (max-width: 768px) {
-    font-size: 0.8em;
-    margin: 3px;
-    width: 40px;
-    height: 40px;
-  }
-`
 
 const StyledDivOfCurrentDay = styled.div`
   text-align: center;
@@ -81,18 +63,6 @@ export default function Home() {
     dayjs().format('dddd D MMMM')
   ) // Initialize with the current date)
 
-  const startOfWeek = dayjs().startOf('week')
-
-  const weekdays = new Array(7)
-    .fill(startOfWeek)
-    .map((day, idx) => day.add(idx, 'day'))
-
-  const handleDayClick = (day) => {
-    const formattedDate = day.format('dddd D MMMM')
-
-    setSelectedDate(formattedDate)
-  }
-
   return (
     <div>
       {isLoading ? (
@@ -101,16 +71,11 @@ export default function Home() {
         <HomeContainer>
           <Header />
           <StyledDivContainerNoData>
-            <div>
-              {weekdays.map((day) => (
-                <StyledDaysButton onClick={() => handleDayClick(day)} key={day}>
-                  {day.format('ddd')}
-                </StyledDaysButton>
-              ))}
-            </div>
+            <DateSelector setSelectedDate={setSelectedDate} />
             {selectedDate && (
               <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
             )}
+
             <UlTaskList>
               <TaskList
                 items={items}
@@ -118,6 +83,8 @@ export default function Home() {
                 deleteTask={deleteTask}
                 editTask={editTask}
                 serieCount={serieCount}
+                showSlideButton={true}
+                shouldBeFilteredByDate={true}
               />
             </UlTaskList>
           </StyledDivContainerNoData>

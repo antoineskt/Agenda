@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import Header from '../../components/Header'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
-import TodoWhithoutSwipe from '../../components/TodoWhitoutSwipe'
 import { useData } from '../../utils/Datas'
+import TaskList from '../../components/TaskList'
 
 const HomeContainer = styled.div`
   margin: 0;
@@ -34,49 +34,29 @@ const UlTaskList = styled.div`
 `
 
 function Stats() {
-  const { items, isLoading, deleteTask, editTask } = useData()
+  const { items, isLoading, deleteTask, editTask, serieCount } = useData()
 
-  function TodoStatPage() {
-    const taskLists = items.map((task) => (
-      <TodoWhithoutSwipe
-        id={task.id}
-        name={task.name}
-        key={task.id}
-        deleteTask={deleteTask}
-        editTask={editTask}
-        serie={task.serie}
-      />
-    ))
-
-    return (
-      <div>
-        <StyledDivContainerNoData>
-          <UlTaskList>{taskLists}</UlTaskList>
-        </StyledDivContainerNoData>
-      </div>
-    )
-  }
-
-  if (isLoading) {
-    return <div>is loading..</div>
-  } else {
-    if (items.length !== 0) {
-      console.log(
-        'il y a des items ds le local storage, donc on affiche la page toDo'
-      )
-
-      return (
+  return (
+    <div>
+      {isLoading ? (
+        <div>Loading..</div>
+      ) : items.length !== 0 ? (
         <HomeContainer>
           <Header />
-
-          <TodoStatPage />
+          <StyledDivContainerNoData>
+            <UlTaskList>
+              <TaskList
+                items={items}
+                deleteTask={deleteTask}
+                editTask={editTask}
+                serieCount={serieCount}
+                showSlideButton={false}
+                shouldBeFilteredByDate={false}
+              />
+            </UlTaskList>
+          </StyledDivContainerNoData>
         </HomeContainer>
-      )
-    } else {
-      console.log(
-        "pas d'items dans le local storage, on affiche la page d'accueil avec le bouton"
-      )
-      return (
+      ) : (
         <HomeContainer>
           <Header />
           <MainStyled>
@@ -91,9 +71,9 @@ function Stats() {
             </Link>
           </MainStyled>
         </HomeContainer>
-      )
-    }
-  }
+      )}
+    </div>
+  )
 }
 
 export default Stats

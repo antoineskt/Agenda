@@ -103,14 +103,16 @@ export default function ToDo(props) {
           Delete
         </StyledButton>
       </StyledDivEditDeleteButton>
-      <SlideButton
-        mainText="Swipe me"
-        overlayText="Bravo"
-        classList="my-class"
-        caretClassList="my-caret-class"
-        overlayClassList="my-overlay-class"
-        onSlideDone={() => props.serieCount(props.id)}
-      />
+      {props.showSlideButton && (
+        <SlideButton
+          mainText="Swipe me"
+          overlayText="Bravo"
+          classList="my-class"
+          caretClassList="my-caret-class"
+          overlayClassList="my-overlay-class"
+          onSlideDone={() => props.serieCount(props.id)}
+        />
+      )}
     </StyledDiv>
   )
   return (
