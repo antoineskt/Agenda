@@ -6,7 +6,7 @@ export function useData() {
 
   const getData = () => {
     const datas = JSON.parse(localStorage.getItem('todos'))
-    console.log('je log les datas(homepage) : ' + JSON.stringify(datas))
+
     if (datas) {
       setItems(datas)
     }

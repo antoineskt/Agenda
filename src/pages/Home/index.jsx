@@ -76,17 +76,15 @@ export default function Home() {
               <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
             )}
 
-            <UlTaskList>
-              <TaskList
-                items={items}
-                selectedDate={selectedDate}
-                deleteTask={deleteTask}
-                editTask={editTask}
-                serieCount={serieCount}
-                showSlideButton={true}
-                shouldBeFilteredByDate={true}
-              />
-            </UlTaskList>
+            <TaskList
+              items={items}
+              selectedDate={selectedDate}
+              deleteTask={deleteTask}
+              editTask={editTask}
+              serieCount={serieCount}
+              showSlideButton={true}
+              shouldBeFilteredByDate={true}
+            />
           </StyledDivContainerNoData>
         </HomeContainer>
       ) : (

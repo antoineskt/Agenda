@@ -2,6 +2,9 @@ import React from 'react'
 import fr from 'dayjs/locale/fr'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
+import { useData } from '../../utils/Datas'
+import { useState } from 'react'
+import TaskOverlay from '../TaskOverlay'
 
 dayjs.locale({
   ...fr,
@@ -50,20 +53,19 @@ const DayOfWeekNames = [
   'Dimanche',
 ]
 
-export default function Calendar({ sendItems }) {
+export default function Calendar() {
+  const [selectedDay, setSelectedDay] = useState(null)
+  const { items } = useData()
   const startOfMonth = dayjs().startOf('month')
   const startOfWeek = startOfMonth.startOf('week')
   const daysInCalendar = 5 * 7
   //on map les items pour avoir les dates, puis on jointe pour correspondre au format
-  const formattedDates = sendItems.map((task) => `'${task.date}'`).join(',')
-  console.log(formattedDates)
+  const formattedDates = items.map((task) => `'${task.date}'`).join(',')
 
   const daysArray = new Array(daysInCalendar)
     .fill(startOfWeek)
     .map((day, idx) => day.add(idx, 'day'))
 
-  const daysArrayFormatted = daysArray.map((day) => day.format('dddd D MMMM'))
-  console.log(daysArrayFormatted)
   return (
     <div>
       <MonthTitle>{startOfMonth.format('MMMM YYYY')}</MonthTitle>
@@ -73,13 +75,22 @@ export default function Calendar({ sendItems }) {
         ))}
         {daysArray.map((day) => (
           <DayButton
+            day={day}
             key={day}
             highlight={formattedDates.includes(day.format('dddd D MMMM'))}
+            onClick={() => setSelectedDay(day)}
           >
             {day.format('D')}
           </DayButton>
         ))}
       </CalendarContainer>
+      {selectedDay &&
+        formattedDates.includes(selectedDay.format('dddd D MMMM')) && (
+          <TaskOverlay
+            selectedDay={selectedDay}
+            onClose={() => setSelectedDay(null)}
+          />
+        )}
     </div>
   )
 }

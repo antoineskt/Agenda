@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import SlideButton from 'react-slide-button'
 import styled from 'styled-components'
-import './todo.css'
+import './todo.css' //For set the black bg of swipe button
 
 const StyledDiv = styled.div`
   margin: 20px;
   border: solid black 2px;
-  /* Media query pour un écran de 768px ou moins */
+  text-align: center;
   @media (max-width: 768px) {
   }
 `
@@ -14,7 +14,6 @@ const StyledDiv = styled.div`
 const StyledLabel = styled.label`
   margin: 20px;
   font-size: 3em;
-  /* Media query pour un écran de 768px ou moins */
   @media (max-width: 768px) {
     font-size: 1.5em;
   }
@@ -22,7 +21,6 @@ const StyledLabel = styled.label`
 
 const StyledDivCount = styled.div`
   font-size: 1.2em;
-  /* Media query pour un écran de 768px ou moins */
   @media (max-width: 768px) {
     font-size: 0.8em;
   }
@@ -30,7 +28,6 @@ const StyledDivCount = styled.div`
 
 const StyledInputEditTemplate = styled.input`
   font-size: 3em;
-  /* Media query pour un écran de 768px ou moins */
   @media (max-width: 768px) {
     font-size: 1em;
   }
@@ -41,7 +38,6 @@ const StyledButton = styled.button`
   font-size: 2em;
   color: white;
   background-color: black;
-  /* Media query pour un écran de 768px ou moins */
   @media (max-width: 768px) {
     font-size: 1em;
   }
