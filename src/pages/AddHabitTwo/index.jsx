@@ -132,7 +132,7 @@ function AddHabitTwo() {
           id="new-todo-input"
           autoComplete="off"
         />
-        <h2>Quand voulez vous suivre votre objectif ? </h2>
+        <h2>Quel jours allez vous réaliser votre objectif ? </h2>
         <StyledContainerDaysButton>
           {weekdays.map((day) => (
             <StyledDaysButton
@@ -148,6 +148,15 @@ function AddHabitTwo() {
             </StyledDaysButton>
           ))}
         </StyledContainerDaysButton>
+        <div>
+          <h2>
+            Pendant combien de temps voulez vous réaliser votre objectif ?
+          </h2>
+          <button>Une semaine</button>
+          <button>Deux semaine</button>
+          <button>Un mois</button>
+          <button>Deux mois</button>
+        </div>
 
         <Link to="/">
           <Button onClick={saveData}>VALIDER</Button>

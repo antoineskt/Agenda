@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import dayjs from 'dayjs'
 import TaskList from '../TaskList'
 import { useData } from '../../utils/Datas'
 
@@ -14,6 +13,7 @@ const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 `
 
 const TaskDetailsContainer = styled.div`
@@ -27,7 +27,7 @@ const TaskOverlay = ({ selectedDay, onClose }) => {
   return (
     <Overlay>
       <TaskDetailsContainer>
-        <h3>Tasks for {selectedDay.format('dddd D MMMM')}</h3>
+        <h3>Tâche(s) du {selectedDay.format('dddd D MMMM')}</h3>
         <TaskList
           items={items}
           selectedDate={selectedDay.format('dddd D MMMM')}
