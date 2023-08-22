@@ -54,8 +54,8 @@ const StyledDaysButton = styled.button`
 
 function AddHabitTwo() {
   const [name, setName] = useState('')
-
   const [selectedDate, setSelectedDate] = useState([])
+  const [selectedDuration, setSelectedDuration] = useState(null)
 
   // Read the URL parameters on page load
   const location = useLocation()
@@ -68,42 +68,56 @@ function AddHabitTwo() {
   }, [location])
 
   const startOfWeek = dayjs().startOf('week')
-
+  //semaine actuelle
   const weekdays = new Array(7)
     .fill(startOfWeek)
     .map((day, idx) => day.add(idx, 'day'))
 
   const handleDayClick = (day) => {
-    const formattedDate = day.format('dddd D MMMM')
-
-    if (selectedDate.length > 0) {
-      console.log(selectedDate.length)
-      if (selectedDate.length > 10) {
-        console.log('length1 : ' + selectedDate)
-        const multipleDate = [...[selectedDate], formattedDate]
-        setSelectedDate(multipleDate)
-      } else {
-        const multipleDate = [...selectedDate, formattedDate]
-        console.log(multipleDate)
-        setSelectedDate(multipleDate)
-      }
-    } else {
-      setSelectedDate(formattedDate)
+    if (selectedDate !== 0) {
+      setSelectedDate([...selectedDate, day])
     }
+    setSelectedDate([day])
   }
 
   function handleInput(e) {
     setName(e.target.value)
   }
 
+  function handleRepeatClick(numberOfWeek) {
+    setSelectedDuration(numberOfWeek)
+    console.log('click')
+    // Capture the value of selectedDuration in a local variable
+    const duration = numberOfWeek
+
+    if (selectedDate.length !== 0) {
+      const repeatedDates = []
+      console.log('inside first condition')
+      for (let i = 0; i < duration; i++) {
+        console.log('inside boucle')
+        console.log(selectedDate)
+        console.log(typeof selectedDate)
+        repeatedDates.push(
+          ...selectedDate.map(
+            (day) => dayjs(day).add(i, 'week').format('dddd D MMMM') //ici il va falloir deformater la date avant
+          )
+        )
+      }
+
+      setSelectedDate(repeatedDates)
+    }
+  }
+
   function saveData() {
     if (name !== '') {
       console.log('le name est ' + name)
+
       const newDatas = {
         id: `todo-${nanoid()}`,
         name: name,
         date: selectedDate,
         serie: 0,
+        total: 0,
       }
       const getDataFromLS = JSON.parse(localStorage.getItem('todos'))
       if (getDataFromLS) {
@@ -139,10 +153,7 @@ function AddHabitTwo() {
               type="button"
               onClick={() => handleDayClick(day)}
               key={day}
-              isActive={
-                selectedDate.length > 0 &&
-                selectedDate.includes(day.format('dddd D MMMM'))
-              }
+              isActive={selectedDate.length > 0 && selectedDate.includes(day)}
             >
               {day.format('ddd')}
             </StyledDaysButton>
@@ -152,10 +163,10 @@ function AddHabitTwo() {
           <h2>
             Pendant combien de temps voulez vous réaliser votre objectif ?
           </h2>
-          <button>Une semaine</button>
-          <button>Deux semaine</button>
-          <button>Un mois</button>
-          <button>Deux mois</button>
+          <button onClick={() => handleRepeatClick(1)}>Une semaine</button>
+          <button onClick={() => handleRepeatClick(2)}>Deux semaines</button>
+          <button onClick={() => handleRepeatClick(4)}>Un mois</button>
+          <button onClick={() => handleRepeatClick(8)}>Deux mois</button>
         </div>
 
         <Link to="/">
