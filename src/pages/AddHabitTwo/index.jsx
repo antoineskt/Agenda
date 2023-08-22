@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { createPath, useLocation } from 'react-router-dom'
 import Header from '../../components/Header'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
@@ -73,11 +73,39 @@ function AddHabitTwo() {
     .fill(startOfWeek)
     .map((day, idx) => day.add(idx, 'day'))
 
+  let formattedStateDay = []
+  if (selectedDate.length >= 1) {
+    formattedStateDay = selectedDate.map((day) => day.format('dddd D MMMM'))
+    console.log('selected date formatted : ' + formattedStateDay)
+  } else {
+    console.log('pas encore')
+  }
+  console.log(formattedStateDay)
+
   const handleDayClick = (day) => {
-    if (selectedDate !== 0) {
+    console.log('log de day : ' + day)
+    console.log('log de selectedate.length : ' + selectedDate.length)
+    const formattedClickDay = day.format('dddd D MMMM')
+
+    console.log(formattedClickDay)
+
+    if (
+      selectedDate.length >= 1 &&
+      formattedStateDay.includes(formattedClickDay)
+    ) {
+      console.log('deja des données et le MEME jour')
+      setSelectedDate(
+        selectedDate.filter(
+          (day) => day.format('dddd D MMMM') !== formattedClickDay
+        )
+      ) //renvoie un tablo sans le jour séléctionné
+    } else if (selectedDate.length >= 1) {
+      console.log('deja des donnés mais pas le même jour')
       setSelectedDate([...selectedDate, day])
+    } else {
+      console.log('pas encore de donné dans le state')
+      setSelectedDate([day])
     }
-    setSelectedDate([day])
   }
 
   function handleInput(e) {
@@ -99,7 +127,7 @@ function AddHabitTwo() {
         console.log(typeof selectedDate)
         repeatedDates.push(
           ...selectedDate.map(
-            (day) => dayjs(day).add(i, 'week').format('dddd D MMMM') //ici il va falloir deformater la date avant
+            (day) => dayjs(day).add(i, 'week') //ici il va falloir deformater la date avant
           )
         )
       }
@@ -111,11 +139,11 @@ function AddHabitTwo() {
   function saveData() {
     if (name !== '') {
       console.log('le name est ' + name)
-
+      const formattedData = selectedDate.map((day) => day.format('dddd D MMMM'))
       const newDatas = {
         id: `todo-${nanoid()}`,
         name: name,
-        date: selectedDate,
+        date: formattedData,
         serie: 0,
         total: 0,
       }
@@ -153,7 +181,10 @@ function AddHabitTwo() {
               type="button"
               onClick={() => handleDayClick(day)}
               key={day}
-              isActive={selectedDate.length > 0 && selectedDate.includes(day)}
+              isActive={
+                selectedDate.length >= 1 &&
+                formattedStateDay.includes(day.format('dddd D MMMM'))
+              }
             >
               {day.format('ddd')}
             </StyledDaysButton>
