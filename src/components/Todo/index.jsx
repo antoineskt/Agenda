@@ -12,7 +12,8 @@ const StyledDiv = styled.div`
 `
 
 const StyledLabel = styled.label`
-  margin: 20px;
+  margin: 0px;
+  padding: 0px;
   font-size: 3em;
   @media (max-width: 768px) {
     font-size: 1.5em;
@@ -90,7 +91,7 @@ export default function ToDo(props) {
       <StyledDivCount>🔥 {props.serie} Jours</StyledDivCount>
 
       <StyledLabel htmlFor={props.id}>{props.name}</StyledLabel>
-
+      <div>{props.selectedDate} </div>
       <StyledDivEditDeleteButton>
         <StyledButton type="button" onClick={() => setEditing(true)}>
           Edit
@@ -106,7 +107,10 @@ export default function ToDo(props) {
           classList="my-class"
           caretClassList="my-caret-class"
           overlayClassList="my-overlay-class"
-          onSlideDone={() => props.serieCount(props.id)}
+          reset={props.selectedDate}
+          onSlideDone={() => {
+            props.taskDoneCount(props.id, props.selectedDate)
+          }}
         />
       )}
     </StyledDiv>

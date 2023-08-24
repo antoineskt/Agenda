@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
 import { useData } from '../../utils/Datas'
 import TaskList from '../../components/TaskList'
-import DateSelector from '../../components/DateSelector'
+import DateSelectorTwo from '../../components/DateSelectorTwo'
 
 dayjs.locale({
   ...fr,
@@ -52,12 +52,16 @@ const StyledDivOfCurrentDay = styled.div`
   }
 `
 
-const UlTaskList = styled.div`
-  text-align: center;
-`
-
 export default function Home() {
-  const { items, isLoading, deleteTask, editTask, serieCount } = useData()
+  const {
+    items,
+    setItems,
+    isLoading,
+    deleteTask,
+    editTask,
+    taskDoneCount,
+    addDateIsDone,
+  } = useData()
 
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format('dddd D MMMM')
@@ -71,19 +75,25 @@ export default function Home() {
         <HomeContainer>
           <Header />
           <StyledDivContainerNoData>
-            <DateSelector setSelectedDate={setSelectedDate} />
+            <DateSelectorTwo
+              setSelectedDate={setSelectedDate}
+              isHome={true}
+              items={items}
+              setItems={setItems}
+            />
             {selectedDate && (
               <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
             )}
 
-            <TaskList
+            <TaskList //Affiché uniquement si une des dates correspond a la date selectionné
               items={items}
               selectedDate={selectedDate}
               deleteTask={deleteTask}
               editTask={editTask}
-              serieCount={serieCount}
+              taskDoneCount={taskDoneCount}
               showSlideButton={true}
               shouldBeFilteredByDate={true}
+              addDateIsDone={addDateIsDone}
             />
           </StyledDivContainerNoData>
         </HomeContainer>

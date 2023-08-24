@@ -34,19 +34,46 @@ export function useData() {
     localStorage.setItem('todos', JSON.stringify(editedTaskList))
   }
 
-  const serieCount = (id) => {
-    alert('Félicitations vous avez accompli votre objectif')
-    const serieTaskList = items.map((task) => {
+  const taskDoneCount = (id, selectedDate) => {
+    const countTaskList = items.map((task) => {
       if (id === task.id) {
-        const newCount = task.serie + 1
-        return { ...task, serie: newCount }
+        //est ce que dateIsone inclut deja la date selectionné ? si oui retourné serie, sinon retourné serie + 1
+        const countSerie = task.dateIsDone.includes(selectedDate)
+          ? task.serie
+          : (task.serie += 1)
+
+        const newCount = task.dateIsDone.includes(selectedDate)
+          ? task.totalTaskDone
+          : task.totalTaskDone + 1
+
+        const newDateIsDone = !task.dateIsDone.includes(selectedDate)
+          ? [...task.dateIsDone, selectedDate]
+          : task.dateIsDone
+        if (!task.dateIsDone.includes(selectedDate)) {
+          alert('Félicitations vous avez accompli votre objectif')
+        } else alert('Objectif déjà validé')
+
+        return {
+          ...task,
+          totalTaskDone: newCount,
+          dateIsDone: newDateIsDone,
+          serie: countSerie,
+        }
       }
       return task
     })
 
-    setItems(serieTaskList)
-    localStorage.setItem('todos', JSON.stringify(serieTaskList))
+    setItems(countTaskList)
+    localStorage.setItem('todos', JSON.stringify(countTaskList))
   }
 
-  return { items, isLoading, getData, deleteTask, editTask, serieCount }
+  return {
+    items,
+    isLoading,
+    getData,
+    deleteTask,
+    editTask,
+    taskDoneCount,
+    setItems,
+  }
 }

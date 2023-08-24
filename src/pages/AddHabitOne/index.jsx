@@ -36,7 +36,7 @@ function AddHabitOne() {
       <Header />
       <MainStyled>
         <Link to="/AddHabitTwo">
-          <Button>Créer un objectif personnalisée</Button>
+          <Button>Objectif personnalisé</Button>
         </Link>
         <StyledDivModele>Ou utilise un modèle :</StyledDivModele>
         <Div>

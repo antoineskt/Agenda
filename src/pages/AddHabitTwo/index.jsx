@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { createPath, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import Header from '../../components/Header'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
@@ -7,6 +7,9 @@ import styled from 'styled-components'
 import { nanoid } from 'nanoid'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
+import DateSelectorTwo from '../../components/DateSelectorTwo'
+import Input from '../../components/Input'
+import ButtonDuray from '../../components/ButtonDuray'
 
 dayjs.locale({
   ...fr,
@@ -20,42 +23,18 @@ const StyledContaineur = styled.div`
   align-items: center;
 `
 
-const StyledH1 = styled.h1`
-  font-size: 3em;
-  /* Media query pour un écran de 768px ou moins */
-  @media (max-width: 768px) {
-    font-size: 1.5em;
-  }
-`
-
-const StyledInput = styled.input`
-  font-size: 2em;
-  border-radius: 7px;
-  border: 4px solid black;
-`
-
-const StyledContainerDaysButton = styled.div`
-  font-size: 1.5em;
-  margin-bottom: 2em;
-`
-
-const StyledDaysButton = styled.button`
-  color: white;
-  font-size: 1em;
-  margin: 5px;
-  width: 70px;
-  height: 70px;
-  border-radius: 30%;
-  &:hover {
-    background-color: #faca21;
-  }
-  background-color: ${({ isActive }) => (isActive ? 'hotpink' : 'black')};
+const DivButtonDuray = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  margin-top: 40px;
 `
 
 function AddHabitTwo() {
   const [name, setName] = useState('')
   const [selectedDate, setSelectedDate] = useState([])
   const [selectedDuration, setSelectedDuration] = useState(null)
+  const [listOfRepeatedDate, setListOfRepeatedDate] = useState(null)
 
   // Read the URL parameters on page load
   const location = useLocation()
@@ -67,85 +46,55 @@ function AddHabitTwo() {
     }
   }, [location])
 
-  const startOfWeek = dayjs().startOf('week')
-  //semaine actuelle
-  const weekdays = new Array(7)
-    .fill(startOfWeek)
-    .map((day, idx) => day.add(idx, 'day'))
-
-  let formattedStateDay = []
-  if (selectedDate.length >= 1) {
-    formattedStateDay = selectedDate.map((day) => day.format('dddd D MMMM'))
-    console.log('selected date formatted : ' + formattedStateDay)
-  } else {
-    console.log('pas encore')
-  }
-  console.log(formattedStateDay)
-
-  const handleDayClick = (day) => {
-    console.log('log de day : ' + day)
-    console.log('log de selectedate.length : ' + selectedDate.length)
-    const formattedClickDay = day.format('dddd D MMMM')
-
-    console.log(formattedClickDay)
-
-    if (
-      selectedDate.length >= 1 &&
-      formattedStateDay.includes(formattedClickDay)
-    ) {
-      console.log('deja des données et le MEME jour')
-      setSelectedDate(
-        selectedDate.filter(
-          (day) => day.format('dddd D MMMM') !== formattedClickDay
-        )
-      ) //renvoie un tablo sans le jour séléctionné
-    } else if (selectedDate.length >= 1) {
-      console.log('deja des donnés mais pas le même jour')
-      setSelectedDate([...selectedDate, day])
-    } else {
-      console.log('pas encore de donné dans le state')
-      setSelectedDate([day])
-    }
-  }
-
   function handleInput(e) {
     setName(e.target.value)
   }
 
   function handleRepeatClick(numberOfWeek) {
-    setSelectedDuration(numberOfWeek)
     console.log('click')
-    // Capture the value of selectedDuration in a local variable
+
+    setSelectedDuration(numberOfWeek)
     const duration = numberOfWeek
 
-    if (selectedDate.length !== 0) {
+    //si le state contient deja le chiffre du btn cliqué renvoyer 0 pour désactiver la couleur du btn
+    if (selectedDuration && selectedDuration === numberOfWeek) {
+      setSelectedDuration(0)
+      setListOfRepeatedDate(null)
+    }
+    // si il y a bien une des dates séléctionnés et une durée :
+    else if (selectedDate.length !== 0 && duration >= 1) {
       const repeatedDates = []
+      console.log('repeteadates débuit : ' + repeatedDates)
       console.log('inside first condition')
       for (let i = 0; i < duration; i++) {
         console.log('inside boucle')
-        console.log(selectedDate)
-        console.log(typeof selectedDate)
         repeatedDates.push(
           ...selectedDate.map(
-            (day) => dayjs(day).add(i, 'week') //ici il va falloir deformater la date avant
+            (day) => dayjs(day).add(i, 'week') //créer une répétion des dates sélectionnés
           )
         )
       }
-
-      setSelectedDate(repeatedDates)
+      //on met dans le state final les dates répétés
+      console.log('repeteddata : ' + repeatedDates)
+      setListOfRepeatedDate(repeatedDates)
+      console.log(repeatedDates.length)
     }
   }
 
   function saveData() {
     if (name !== '') {
       console.log('le name est ' + name)
-      const formattedData = selectedDate.map((day) => day.format('dddd D MMMM'))
+      const formattedData = listOfRepeatedDate
+        ? listOfRepeatedDate.map((day) => day.format('dddd D MMMM'))
+        : selectedDate.map((day) => day.format('dddd D MMMM'))
       const newDatas = {
         id: `todo-${nanoid()}`,
         name: name,
         date: formattedData,
+        totalDate: formattedData.length, //nombre de dates total pour cet objectif
+        totalTaskDone: 0,
         serie: 0,
-        total: 0,
+        dateIsDone: [], //tableau boolean pr chaque jour, si une date validé, true
       }
       const getDataFromLS = JSON.parse(localStorage.getItem('todos'))
       if (getDataFromLS) {
@@ -165,39 +114,43 @@ function AddHabitTwo() {
     <div>
       <Header />
       <StyledContaineur>
-        <StyledH1>Quel est votre objectif ? </StyledH1>
-        <StyledInput
-          type="text"
-          placeholder="écrivez ici"
-          onChange={handleInput}
-          value={name}
-          id="new-todo-input"
-          autoComplete="off"
+        <h2>Quel est votre objectif ? </h2>
+        <Input onChange={handleInput} value={name} />
+        <h2>Quels jours allez vous réaliser votre objectif ? </h2>
+        <DateSelectorTwo
+          setSelectedDate={setSelectedDate}
+          selectedDate={selectedDate}
         />
-        <h2>Quel jours allez vous réaliser votre objectif ? </h2>
-        <StyledContainerDaysButton>
-          {weekdays.map((day) => (
-            <StyledDaysButton
-              type="button"
-              onClick={() => handleDayClick(day)}
-              key={day}
-              isActive={
-                selectedDate.length >= 1 &&
-                formattedStateDay.includes(day.format('dddd D MMMM'))
-              }
-            >
-              {day.format('ddd')}
-            </StyledDaysButton>
-          ))}
-        </StyledContainerDaysButton>
         <div>
           <h2>
             Pendant combien de temps voulez vous réaliser votre objectif ?
           </h2>
-          <button onClick={() => handleRepeatClick(1)}>Une semaine</button>
-          <button onClick={() => handleRepeatClick(2)}>Deux semaines</button>
-          <button onClick={() => handleRepeatClick(4)}>Un mois</button>
-          <button onClick={() => handleRepeatClick(8)}>Deux mois</button>
+          <DivButtonDuray>
+            <ButtonDuray
+              isSelected={selectedDuration ? selectedDuration === 1 : false}
+              onClick={() => handleRepeatClick(1)}
+            >
+              Une semaine
+            </ButtonDuray>
+            <ButtonDuray
+              isSelected={selectedDuration ? selectedDuration === 2 : false}
+              onClick={() => handleRepeatClick(2)}
+            >
+              Deux semaines
+            </ButtonDuray>
+            <ButtonDuray
+              isSelected={selectedDuration ? selectedDuration === 4 : false}
+              onClick={() => handleRepeatClick(4)}
+            >
+              Un mois
+            </ButtonDuray>
+            <ButtonDuray
+              isSelected={selectedDuration ? selectedDuration === 8 : false}
+              onClick={() => handleRepeatClick(8)}
+            >
+              Deux mois
+            </ButtonDuray>
+          </DivButtonDuray>
         </div>
 
         <Link to="/">
