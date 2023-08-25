@@ -28,19 +28,19 @@ const DateSelectorTwo = ({
     if (isHome === true) {
       const formattedDate = day.format('dddd D MMMM')
       setSelectedDate(formattedDate)
-      console.log(items)
+
       const isAserie = items.map((task) => {
         if (task.dateIsDone.length >= 1 && task.date.includes(formattedDate)) {
           const indexDateBefore = task.date.indexOf(formattedDate) - 1
-          console.log(indexDateBefore)
+
           const indexDateIsDoneBefore =
             task.dateIsDone.indexOf(formattedDate) - 1
-          console.log(indexDateIsDoneBefore)
+
           const indexDateAfter = task.date.indexOf(formattedDate) + 1
-          console.log(indexDateAfter)
+
           const indexDateIsDoneAfter =
             task.dateIsDone.indexOf(formattedDate) + 1
-          console.log(indexDateIsDoneAfter)
+
           const serieOrNot =
             // est ce que le jour d'avant celui cliqué ds task.date est égal à la derniere date de task.dateIsDone ?
 
@@ -49,10 +49,10 @@ const DateSelectorTwo = ({
             task.dateIsDone.includes(task.date[indexDateAfter])
               ? task.serie
               : (task.serie = 0)
-          console.log('serie or not : ' + serieOrNot)
+
           return { ...task, serie: serieOrNot }
         }
-        console.log("condition nn valide j'affiche task : " + task)
+
         return task
       })
       setItems(isAserie)
