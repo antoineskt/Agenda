@@ -14,7 +14,7 @@ export default function Input({ onChange, value }) {
         onChange={onChange}
         value={value}
       />
-      <label class="label">Username</label>
+      <label class="label"></label>
     </div>
   )
 }

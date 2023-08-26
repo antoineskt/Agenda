@@ -1,9 +1,17 @@
 .my-class {
-    
-  }
-  .my-caret-class {
-    background:black !important;
-  }
-  .my-overlay-class {
-    background:black !important;
-  }
+  border: none;
+  background: #0f0f0f;
+  margin: 20px;
+  border-radius: 20px;
+  color: white;
+}
+.my-caret-class {
+  background: #0f0f0f !important;
+  border: none;
+  border-radius: 10px;
+}
+.my-overlay-class {
+  background: #0f0f0f !important;
+}
+
+/* 292929 */

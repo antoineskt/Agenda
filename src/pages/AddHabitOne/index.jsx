@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import Header from '../../components/Header'
+import NavBar from '../../components/NavBar'
 import Button from '../../components/Button'
 import styled from 'styled-components'
 
@@ -33,7 +33,7 @@ const Div = styled.div`
 function AddHabitOne() {
   return (
     <div>
-      <Header />
+      <NavBar />
       <MainStyled>
         <Link to="/AddHabitTwo">
           <Button>Objectif personnalisé</Button>

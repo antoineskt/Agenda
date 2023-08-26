@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Header from '../../components/Header'
+import NavBar from '../../components/NavBar'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -74,7 +74,7 @@ export default function Home() {
         <div>Loading...</div>
       ) : items.length !== 0 ? (
         <HomeContainer>
-          <Header />
+          <NavBar />
           <StyledDivContainerNoData>
             <DateSelectorTwo
               setSelectedDate={setSelectedDate}
@@ -102,7 +102,7 @@ export default function Home() {
         </HomeContainer>
       ) : (
         <HomeContainer>
-          <Header />
+          <NavBar />
           <MainStyled>
             <StyledDivHomeWithNoData>
               Créer une habitude personnalisée dès maintenant afin

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Header from '../../components/Header'
+import NavBar from '../../components/NavBar'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import { useData } from '../../utils/Datas'
@@ -42,7 +42,7 @@ function Stats() {
         <div>Loading..</div>
       ) : items.length !== 0 ? (
         <HomeContainer>
-          <Header />
+          <NavBar />
           <StyledDivContainerNoData>
             <UlTaskList>
               <TaskList
@@ -58,7 +58,7 @@ function Stats() {
         </HomeContainer>
       ) : (
         <HomeContainer>
-          <Header />
+          <NavBar />
           <MainStyled>
             <StyledDivHomeWithNoData>
               Il n'y a pas encore de statistiques, crée une habitude

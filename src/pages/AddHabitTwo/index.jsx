@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import Header from '../../components/Header'
+import NavBar from '../../components/NavBar'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -112,7 +112,7 @@ function AddHabitTwo() {
 
   return (
     <div>
-      <Header />
+      <NavBar />
       <StyledContaineur>
         <h2>Quel est votre objectif ? </h2>
         <Input onChange={handleInput} value={name} />
