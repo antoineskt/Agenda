@@ -64,6 +64,19 @@ export default function ToDo(props) {
     setEditing(false)
   }
 
+  //renvoie true si la date selectionné est une date future
+  const isAfuturDate = (props) => {
+    if (
+      props.date.indexOf(props.FormattedDateOfToday) <
+      props.date.indexOf(props.selectedDate)
+    ) {
+      console.log('date future')
+      return true
+    } else {
+      return false
+    }
+  }
+
   const editingTemplate = (
     <form onSubmit={handleSubmit}>
       <StyledDiv>
@@ -88,7 +101,9 @@ export default function ToDo(props) {
 
   const normalTemplate = (
     <StyledDiv>
-      <StyledDivCount>🔥 {props.serie} Jours</StyledDivCount>
+      {!isAfuturDate(props) && (
+        <StyledDivCount>🔥 {props.serie} Jours</StyledDivCount>
+      )}
 
       <StyledLabel htmlFor={props.id}>{props.name}</StyledLabel>
       <div>{props.selectedDate} </div>
@@ -100,7 +115,7 @@ export default function ToDo(props) {
           Delete
         </StyledButton>
       </StyledDivEditDeleteButton>
-      {props.showSlideButton && (
+      {!isAfuturDate(props) && props.showSlideButton && (
         <SlideButton
           mainText="Swipe me"
           overlayText="Bravo"

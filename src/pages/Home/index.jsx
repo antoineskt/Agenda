@@ -61,6 +61,7 @@ export default function Home() {
     editTask,
     taskDoneCount,
     addDateIsDone,
+    FormattedDateOfToday,
   } = useData()
 
   const [selectedDate, setSelectedDate] = useState(
@@ -80,6 +81,7 @@ export default function Home() {
               isHome={true}
               items={items}
               setItems={setItems}
+              FormattedDateOfToday={FormattedDateOfToday}
             />
             {selectedDate && (
               <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
@@ -94,6 +96,7 @@ export default function Home() {
               showSlideButton={true}
               shouldBeFilteredByDate={true}
               addDateIsDone={addDateIsDone}
+              FormattedDateOfToday={FormattedDateOfToday}
             />
           </StyledDivContainerNoData>
         </HomeContainer>

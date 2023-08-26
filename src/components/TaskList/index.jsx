@@ -10,6 +10,7 @@ function TaskList({
   showSlideButton,
   shouldBeFilteredByDate,
   addDateIsDone,
+  FormattedDateOfToday,
 }) {
   //retourne un nv tablo d'une ou pls taches ayant la mm date que celle selectionné
   //on vérifie pr chaque tache si elle contient la date
@@ -32,6 +33,9 @@ function TaskList({
       showSlideButton={showSlideButton}
       selectedDate={selectedDate}
       addDateIsDone={addDateIsDone}
+      FormattedDateOfToday={FormattedDateOfToday}
+      items={items}
+      date={task.date}
     />
   ))
 

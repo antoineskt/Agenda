@@ -8,6 +8,7 @@ const DateSelectorTwo = ({
   isHome,
   items,
   setItems,
+  FormattedDateOfToday,
 }) => {
   const startOfWeek = dayjs().startOf('week')
 
@@ -30,27 +31,34 @@ const DateSelectorTwo = ({
       setSelectedDate(formattedDate)
 
       const isAserie = items.map((task) => {
-        if (task.dateIsDone.length >= 1 && task.date.includes(formattedDate)) {
-          const indexDateBefore = task.date.indexOf(formattedDate) - 1
+        //si l'on clique sur un date future, cela retourne rien
 
-          const indexDateIsDoneBefore =
-            task.dateIsDone.indexOf(formattedDate) - 1
+        if (
+          task.date.indexOf(FormattedDateOfToday) <
+          task.date.indexOf(formattedDate)
+        ) {
+          return task
+        } else {
+          //vérification si c'est une série ou pas ?
+          if (
+            task.dateIsDone.length >= 1 &&
+            task.date.includes(formattedDate)
+          ) {
+            const indexDateBefore = task.date.indexOf(formattedDate) - 1
 
-          const indexDateAfter = task.date.indexOf(formattedDate) + 1
+            const indexDateAfter = task.date.indexOf(formattedDate) + 1
 
-          const indexDateIsDoneAfter =
-            task.dateIsDone.indexOf(formattedDate) + 1
+            const serieOrNot =
+              // est ce que le jour d'avant celui cliqué ds task.date est égal à la derniere date de task.dateIsDone ?
 
-          const serieOrNot =
-            // est ce que le jour d'avant celui cliqué ds task.date est égal à la derniere date de task.dateIsDone ?
+              task.dateIsDone.includes(task.date[indexDateBefore]) ||
+              // OU si le jour d'après celui cliqué ds task.date est égal au jour d'après selectedate de task.dateIsDone ?
+              task.dateIsDone.includes(task.date[indexDateAfter])
+                ? task.serie
+                : (task.serie = 0)
 
-            task.dateIsDone.includes(task.date[indexDateBefore]) ||
-            // OU si le jour d'après celui cliqué ds task.date est égal au jour d'après selectedate de task.dateIsDone ?
-            task.dateIsDone.includes(task.date[indexDateAfter])
-              ? task.serie
-              : (task.serie = 0)
-
-          return { ...task, serie: serieOrNot }
+            return { ...task, serie: serieOrNot }
+          }
         }
 
         return task
