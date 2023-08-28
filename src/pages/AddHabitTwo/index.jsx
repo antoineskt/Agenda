@@ -30,6 +30,13 @@ const DivButtonDuray = styled.div`
   margin-top: 40px;
 `
 
+const H2 = styled.h2`
+  @media (max-width: 768px) {
+    text-align: center;
+    font-size: 1em;
+  }
+`
+
 function AddHabitTwo() {
   const [name, setName] = useState('')
   const [selectedDate, setSelectedDate] = useState([])
@@ -114,17 +121,17 @@ function AddHabitTwo() {
     <div>
       <NavBar />
       <StyledContaineur>
-        <h2>Quel est votre objectif ? </h2>
+        <H2>Quel est votre objectif ? </H2>
         <Input onChange={handleInput} value={name} />
-        <h2>Quels jours allez vous réaliser votre objectif ? </h2>
+        <H2>Quels jours allez vous réaliser votre objectif ? </H2>
         <DateSelectorTwo
           setSelectedDate={setSelectedDate}
           selectedDate={selectedDate}
         />
         <div>
-          <h2>
+          <H2>
             Pendant combien de temps voulez vous réaliser votre objectif ?
-          </h2>
+          </H2>
           <DivButtonDuray>
             <ButtonDuray
               isSelected={selectedDuration ? selectedDuration === 1 : false}

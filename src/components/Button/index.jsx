@@ -33,10 +33,10 @@ const StyledSpan = styled.span`
   height: 2.9em;
   background-color: #212121;
   border-radius: 0.3em;
-  font-size: 1.5em;
+  font-size: 1.48em;
   color: #fff;
-  border: 0.128em solid #fff;
-  box-shadow: 0 0.48em 0.12em 0.024em #fff;
+  border: 0.01em solid #fff;
+  box-shadow: 0 0.4em 0.11em 0.02em #fff;
   z-index: 1;
   &:hover {
     transition: all 0.5s;
@@ -52,9 +52,9 @@ const StyledSpan = styled.span`
     width: 8.25em;
     height: 2.5em;
     border-radius: 0.2em;
-    font-size: 1.5em;
-    border: 0.08em solid #fff;
-    box-shadow: 0 0.4em 0.1em 0.019em #fff;
+    font-size: 1.48em;
+    border: 0.01em solid #fff;
+    box-shadow: 0 0.35em 0.1em 0.019em #fff;
     &:hover {
       transition: all 0.5s;
       transform: translate(0, 0.4em);
