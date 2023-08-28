@@ -139,6 +139,14 @@ export default function ToDo(props) {
     }
   }
 
+  //est ce validé ?
+  const isValidate = (props) => {
+    console.log('dateisDone : ' + props.dateIsDone)
+    if (props.dateIsDone.includes(props.selectedDate)) {
+      return true
+    } else return false
+  }
+
   const editingTemplate = (
     <form onSubmit={handleSubmit}>
       <StyledDiv>
@@ -172,7 +180,7 @@ export default function ToDo(props) {
           {!isAfuturDate(props) && (
             <DivCountFires>🔥{props.serie} Jours</DivCountFires>
           )}
-          <DivCountToOne>0/1</DivCountToOne>
+          <DivCountToOne>{isValidate(props) ? 1 : 0}/1</DivCountToOne>
           <DivEditDeleteButton>
             <StyledButton type="button" onClick={() => setEditing(true)}>
               {svgEdit}

@@ -36,6 +36,7 @@ function TaskList({
       FormattedDateOfToday={FormattedDateOfToday}
       items={items}
       date={task.date}
+      dateIsDone={task.dateIsDone}
     />
   ))
 
