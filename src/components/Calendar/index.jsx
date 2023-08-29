@@ -35,10 +35,12 @@ const CalendarContainer = styled.div`
 const DayButton = styled.button`
   padding: 10px;
   text-align: center;
-  background-color: ${(props) => (props.highlight ? '#FFD700' : '#F8F8F8')};
+  background-color: ${(props) =>
+    props.colorIfGoalsDone ? '#D4A713' : '#F8F8F8'};
   border: #ccc;
   cursor: pointer;
-  color: ${(props) => (props.currentMonth ? 'black' : '#ccc')};
+  color: ${(props) =>
+    props.currentMonth ? (props.colorIfGoals ? 'red' : 'black') : '#ccc'};
   &:hover {
     background-color: #ddd;
   }
@@ -93,6 +95,7 @@ const ButtonChangeMonth = styled.button`
   border: none;
   font-size: 1em;
   background: none;
+  color: white;
   &:hover {
     background-color: #ddd;
   }
@@ -107,6 +110,8 @@ export default function Calendar() {
   const daysInCalendar = 6 * 7
   //on map les items pour avoir les dates, puis on jointe pour correspondre au format
   const formattedDates = items.map((task) => `'${task.date}'`).join(',')
+
+  const datesIsDone = items.map((task) => `'${task.dateIsDone}'`).join(',')
 
   const daysArray = new Array(daysInCalendar)
     .fill(startOfWeek)
@@ -142,7 +147,8 @@ export default function Calendar() {
           <DayButton
             day={day}
             key={day}
-            highlight={formattedDates.includes(day.format('dddd D MMMM'))}
+            colorIfGoals={formattedDates.includes(day.format('dddd D MMMM'))}
+            colorIfGoalsDone={datesIsDone.includes(day.format('dddd D MMMM'))}
             onClick={() => setSelectedDay(day)}
             className={day.isSame(dayjs(), 'day') ? 'currentDay' : ''}
             currentMonth={day.month() === startOfMonth.month()} // Pass the prop

@@ -59,7 +59,7 @@ export default function Home() {
     isLoading,
     deleteTask,
     editTask,
-    taskDoneCount,
+    slideDone,
     addDateIsDone,
     FormattedDateOfToday,
   } = useData()
@@ -92,11 +92,13 @@ export default function Home() {
               selectedDate={selectedDate}
               deleteTask={deleteTask}
               editTask={editTask}
-              taskDoneCount={taskDoneCount}
+              slideDone={slideDone}
               showSlideButton={true}
               shouldBeFilteredByDate={true}
               addDateIsDone={addDateIsDone}
               FormattedDateOfToday={FormattedDateOfToday}
+              showCountToOne={true}
+              showTotal={false}
             />
           </StyledDivContainerNoData>
         </HomeContainer>

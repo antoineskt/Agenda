@@ -52,6 +52,8 @@ function Stats() {
                 serieCount={serieCount}
                 showSlideButton={false}
                 shouldBeFilteredByDate={false}
+                showCountToOne={false}
+                showTotal={true}
               />
             </UlTaskList>
           </StyledDivContainerNoData>

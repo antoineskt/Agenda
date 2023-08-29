@@ -66,7 +66,8 @@ const DivLeft = styled.div`
 const StyledLabel = styled.label`
   margin: 0px;
   padding: 0px;
-  font-size: 2.5em;
+  font-size: ${(props) => (props.editTemplate ? '1em' : '2.5em')};
+
   @media (max-width: 768px) {
     font-size: 1.5em;
   }
@@ -150,7 +151,7 @@ export default function ToDo(props) {
   const editingTemplate = (
     <form onSubmit={handleSubmit}>
       <StyledDiv>
-        <StyledLabel htmlFor={props.id}>
+        <StyledLabel editTemplate={true} htmlFor={props.id}>
           Nouveau nom pour "{props.name}" :
         </StyledLabel>
         <StyledInputEditTemplate
@@ -180,7 +181,11 @@ export default function ToDo(props) {
           {!isAfuturDate(props) && (
             <DivCountFires>🔥{props.serie} Jours</DivCountFires>
           )}
-          <DivCountToOne>{isValidate(props) ? 1 : 0}/1</DivCountToOne>
+          {props.showCountToOne && (
+            <DivCountToOne>{isValidate(props) ? 1 : 0}/1</DivCountToOne>
+          )}
+          {props.showTotal && <div>Total : {props.totalTaskDone} </div>}
+
           <DivEditDeleteButton>
             <StyledButton type="button" onClick={() => setEditing(true)}>
               {svgEdit}
@@ -201,7 +206,7 @@ export default function ToDo(props) {
             overlayClassList="my-overlay-class"
             reset={props.selectedDate}
             onSlideDone={() => {
-              props.taskDoneCount(props.id, props.selectedDate)
+              props.slideDone(props.id, props.selectedDate)
             }}
           />
         )}

@@ -8,7 +8,7 @@ import AddHabitOne from './pages/AddHabitOne'
 import AddHabitTwo from './pages/AddHabitTwo'
 import Stats from './pages/Stats'
 import GlobalStyle from './utils/style/GlobalStyle'
-import Edit from './pages/Edit'
+
 import CalendarPage from './pages/CalendarPage'
 
 const container = document.getElementById('root')
@@ -24,7 +24,6 @@ root.render(
         <Route path="/AddHabitOne" element={<AddHabitOne />} />
         <Route path="/AddHabitTwo" element={<AddHabitTwo />} />
         <Route path="/Stats" element={<Stats />} />
-        <Route path="/Edit" element={<Edit />} />
         <Route path="/CalendarPage" element={<CalendarPage />} />
       </Routes>
     </Router>

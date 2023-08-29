@@ -45,38 +45,35 @@ export function useData() {
 
   const FormattedDateOfToday = dayjs().format('dddd D MMMM')
 
-  const taskDoneCount = (id, selectedDate) => {
+  const slideDone = (id, selectedDate) => {
     const countTaskList = items.map((task) => {
       if (id === task.id) {
-        //si la date selectionné est après la date du jour, on retourne une alert
-        if (
-          task.date.indexOf(FormattedDateOfToday) <
-          task.date.indexOf(selectedDate)
-        ) {
-          alert('vous ne pouvez pas valider une date futur')
-        } else {
-          //est ce que dateIsone inclut deja la date selectionné ? si oui retourné serie, sinon retourné serie + 1
-          const countSerie = task.dateIsDone.includes(selectedDate)
-            ? task.serie
-            : (task.serie += 1)
+        //est ce que dateIsone inclut deja la date selectionné ? si oui retourné serie, sinon retourné serie + 1
+        const countSerie = task.dateIsDone.includes(selectedDate)
+          ? task.serie
+          : (task.serie += 1)
 
-          const newCount = task.dateIsDone.includes(selectedDate)
-            ? task.totalTaskDone
-            : task.totalTaskDone + 1
+        const newCount = task.dateIsDone.includes(selectedDate)
+          ? task.totalTaskDone
+          : task.totalTaskDone + 1
 
-          const newDateIsDone = !task.dateIsDone.includes(selectedDate)
-            ? [...task.dateIsDone, selectedDate]
-            : task.dateIsDone
-          if (!task.dateIsDone.includes(selectedDate)) {
-            alert('Félicitations vous avez accompli votre objectif')
-          } else alert('Objectif déjà validé')
+        const newDateIsDone = !task.dateIsDone.includes(selectedDate)
+          ? [...task.dateIsDone, selectedDate]
+          : task.dateIsDone
+        if (!task.dateIsDone.includes(selectedDate)) {
+          alert('Félicitations vous avez accompli votre objectif')
+        } else alert('Objectif déjà validé')
 
-          return {
-            ...task,
-            totalTaskDone: newCount,
-            dateIsDone: newDateIsDone,
-            serie: countSerie,
-          }
+        const isValidated = task.dateIsDone.includes(selectedDate)
+          ? true
+          : false
+
+        return {
+          ...task,
+          totalTaskDone: newCount,
+          dateIsDone: newDateIsDone,
+          serie: countSerie,
+          isValidated: isValidated,
         }
       }
       return task
@@ -92,7 +89,7 @@ export function useData() {
     getData,
     deleteTask,
     editTask,
-    taskDoneCount,
+    slideDone,
     setItems,
     FormattedDateOfToday,
   }
