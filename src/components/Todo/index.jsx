@@ -128,10 +128,11 @@ export default function ToDo({
   deleteTask,
   showSlideButton,
   slideDone,
+  setisCongratsPage,
+  isCongratsPage,
 }) {
   const [isEditing, setEditing] = useState(false)
   const [newName, setNewName] = useState('')
-  const [isCongratsPage, setisCongratsPage] = useState(false)
 
   function handleChange(e) {
     setNewName(e.target.value)
@@ -147,7 +148,6 @@ export default function ToDo({
   //renvoie true si la date selectionné est une date future
   const isAfuturDate = ({ FormattedDateOfToday, selectedDate, date }) => {
     if (date.indexOf(FormattedDateOfToday) < date.indexOf(selectedDate)) {
-      console.log('date future')
       return true
     } else {
       return false
@@ -224,7 +224,6 @@ export default function ToDo({
               onSlideDone={() => {
                 setisCongratsPage(true)
                 slideDone(id, selectedDate)
-                console.log('after')
               }}
             />
           )}
@@ -241,6 +240,7 @@ export default function ToDo({
           totalTaskDone={totalTaskDone}
           name={name}
           setisCongratsPage={setisCongratsPage}
+          isCongratsPage={isCongratsPage}
         />
       ) : (
         normalTemplate

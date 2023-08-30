@@ -67,6 +67,7 @@ export default function Home() {
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format('dddd D MMMM')
   ) // Initialize with the current date)
+  const [isCongratsPage, setisCongratsPage] = useState(false)
 
   return (
     <div>
@@ -82,6 +83,8 @@ export default function Home() {
               items={items}
               setItems={setItems}
               FormattedDateOfToday={FormattedDateOfToday}
+              setisCongratsPage={setisCongratsPage}
+              isCongratsPage={isCongratsPage}
             />
             {selectedDate && (
               <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
@@ -99,6 +102,8 @@ export default function Home() {
               FormattedDateOfToday={FormattedDateOfToday}
               showCountToOne={true}
               showTotal={false}
+              setisCongratsPage={setisCongratsPage}
+              isCongratsPage={isCongratsPage}
             />
           </StyledDivContainerNoData>
         </HomeContainer>

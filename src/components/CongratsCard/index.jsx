@@ -5,10 +5,11 @@ export default function CongratsCard({
   totalTaskDone,
   name,
   setisCongratsPage,
+  isCongratsPage,
 }) {
   return (
     <section class="container">
-      <div class="card-container">
+      <div class={'card-container'}>
         <div class="card-content">
           <div class="card-title">
             <span class="title">Bravo !</span>

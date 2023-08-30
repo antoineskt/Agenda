@@ -9,6 +9,8 @@ const DateSelector = ({
   items,
   setItems,
   FormattedDateOfToday,
+  setisCongratsPage,
+  isCongratsPage,
 }) => {
   const startOfWeek = dayjs().startOf('week')
 
@@ -23,6 +25,7 @@ const DateSelector = ({
   }
 
   const handleDayClick = (day) => {
+    isCongratsPage && setisCongratsPage(false)
     const formattedClickDay = day.format('dddd D MMMM')
 
     // si c'est la page home :

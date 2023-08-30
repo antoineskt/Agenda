@@ -13,6 +13,8 @@ function TaskList({
   FormattedDateOfToday,
   showCountToOne,
   showTotal,
+  setisCongratsPage,
+  isCongratsPage,
 }) {
   //retourne un nv tablo d'une ou pls taches ayant la mm date que celle selectionné
   //on vérifie pr chaque tache si elle contient la date
@@ -41,6 +43,8 @@ function TaskList({
       dateIsDone={task.dateIsDone}
       showCountToOne={showCountToOne}
       showTotal={showTotal}
+      setisCongratsPage={setisCongratsPage}
+      isCongratsPage={isCongratsPage}
     />
   ))
 
