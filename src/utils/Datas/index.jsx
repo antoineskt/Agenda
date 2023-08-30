@@ -46,6 +46,7 @@ export function useData() {
   const FormattedDateOfToday = dayjs().format('dddd D MMMM')
 
   const slideDone = (id, selectedDate) => {
+    console.log('datas ici')
     const countTaskList = items.map((task) => {
       if (id === task.id) {
         //est ce que dateIsone inclut deja la date selectionné ? si oui retourné serie, sinon retourné serie + 1
@@ -61,7 +62,6 @@ export function useData() {
           ? [...task.dateIsDone, selectedDate]
           : task.dateIsDone
         if (!task.dateIsDone.includes(selectedDate)) {
-          alert('Félicitations vous avez accompli votre objectif')
         } else alert('Objectif déjà validé')
 
         const isValidated = task.dateIsDone.includes(selectedDate)

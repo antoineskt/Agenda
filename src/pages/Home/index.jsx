@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
 import { useData } from '../../utils/Datas'
 import TaskList from '../../components/TaskList'
-import DateSelectorTwo from '../../components/DateSelectorTwo'
+import DateSelector from '../../components/DateSelector'
 
 dayjs.locale({
   ...fr,
@@ -76,7 +76,7 @@ export default function Home() {
         <HomeContainer>
           <NavBar />
           <StyledDivContainerNoData>
-            <DateSelectorTwo
+            <DateSelector
               setSelectedDate={setSelectedDate}
               isHome={true}
               items={items}

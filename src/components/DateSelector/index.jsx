@@ -2,7 +2,7 @@ import React from 'react'
 import dayjs from 'dayjs'
 import DaysOfWeek from '../DaysOfWeek'
 
-const DateSelectorTwo = ({
+const DateSelector = ({
   setSelectedDate,
   selectedDate,
   isHome,
@@ -98,4 +98,4 @@ const DateSelectorTwo = ({
   )
 }
 
-export default DateSelectorTwo
+export default DateSelector

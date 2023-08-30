@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import SlideButton from 'react-slide-button'
 import styled from 'styled-components'
 import './todo.css' //For set the black bg of swipe button
+import CongratsCard from '../CongratsCard'
 
 const svgEdit = (
   <svg
@@ -112,9 +113,25 @@ const DivEditDeleteButton = styled.div`
   justify-content: center;
 `
 
-export default function ToDo(props) {
+export default function ToDo({
+  editTask,
+  id,
+  date,
+  FormattedDateOfToday,
+  selectedDate,
+  dateIsDone,
+  name,
+  serie,
+  totalTaskDone,
+  showCountToOne,
+  showTotal,
+  deleteTask,
+  showSlideButton,
+  slideDone,
+}) {
   const [isEditing, setEditing] = useState(false)
   const [newName, setNewName] = useState('')
+  const [isCongratsPage, setisCongratsPage] = useState(false)
 
   function handleChange(e) {
     setNewName(e.target.value)
@@ -122,17 +139,14 @@ export default function ToDo(props) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    props.editTask(props.id, newName)
+    editTask(id, newName)
     setNewName('')
     setEditing(false)
   }
 
   //renvoie true si la date selectionné est une date future
-  const isAfuturDate = (props) => {
-    if (
-      props.date.indexOf(props.FormattedDateOfToday) <
-      props.date.indexOf(props.selectedDate)
-    ) {
+  const isAfuturDate = ({ FormattedDateOfToday, selectedDate, date }) => {
+    if (date.indexOf(FormattedDateOfToday) < date.indexOf(selectedDate)) {
       console.log('date future')
       return true
     } else {
@@ -141,9 +155,8 @@ export default function ToDo(props) {
   }
 
   //est ce validé ?
-  const isValidate = (props) => {
-    console.log('dateisDone : ' + props.dateIsDone)
-    if (props.dateIsDone.includes(props.selectedDate)) {
+  const isValidate = ({ dateIsDone, selectedDate }) => {
+    if (dateIsDone.includes(selectedDate)) {
       return true
     } else return false
   }
@@ -151,11 +164,11 @@ export default function ToDo(props) {
   const editingTemplate = (
     <form onSubmit={handleSubmit}>
       <StyledDiv>
-        <StyledLabel editTemplate={true} htmlFor={props.id}>
-          Nouveau nom pour "{props.name}" :
+        <StyledLabel editTemplate={true} htmlFor={id}>
+          Nouveau nom pour "{name}" :
         </StyledLabel>
         <StyledInputEditTemplate
-          id={props.id}
+          id={id}
           type="text"
           value={newName}
           onChange={handleChange}
@@ -174,46 +187,64 @@ export default function ToDo(props) {
     <StyledDiv>
       <DivTop>
         <DivLeft>
-          <StyledLabel htmlFor={props.id}>{props.name}</StyledLabel>
+          <StyledLabel htmlFor={id}>{name}</StyledLabel>
         </DivLeft>
 
         <DivRight>
-          {!isAfuturDate(props) && (
-            <DivCountFires>🔥{props.serie} Jours</DivCountFires>
+          {!isAfuturDate({ serie, date }) && (
+            <DivCountFires>🔥{serie} Jours</DivCountFires>
           )}
-          {props.showCountToOne && (
-            <DivCountToOne>{isValidate(props) ? 1 : 0}/1</DivCountToOne>
+          {showCountToOne && (
+            <DivCountToOne>
+              {isValidate({ dateIsDone, selectedDate }) ? 1 : 0}/1
+            </DivCountToOne>
           )}
-          {props.showTotal && <div>Total : {props.totalTaskDone} </div>}
+          {showTotal && <div>Total : {totalTaskDone} </div>}
 
           <DivEditDeleteButton>
             <StyledButton type="button" onClick={() => setEditing(true)}>
               {svgEdit}
             </StyledButton>
-            <StyledButton onClick={() => props.deleteTask(props.id)}>
+            <StyledButton onClick={() => deleteTask(id)}>
               {svgTrash}
             </StyledButton>
           </DivEditDeleteButton>
         </DivRight>
       </DivTop>
       <div>
-        {!isAfuturDate(props) && props.showSlideButton && (
-          <SlideButton
-            mainText="Swipe me"
-            overlayText="Bravo"
-            classList="my-class"
-            caretClassList="my-caret-class"
-            overlayClassList="my-overlay-class"
-            reset={props.selectedDate}
-            onSlideDone={() => {
-              props.slideDone(props.id, props.selectedDate)
-            }}
-          />
-        )}
+        {!isAfuturDate({ FormattedDateOfToday, selectedDate, date }) &&
+          showSlideButton && (
+            <SlideButton
+              mainText="Swipe me"
+              overlayText="Bravo"
+              classList="my-class"
+              caretClassList="my-caret-class"
+              overlayClassList="my-overlay-class"
+              reset={selectedDate}
+              onSlideDone={() => {
+                setisCongratsPage(true)
+                slideDone(id, selectedDate)
+                console.log('after')
+              }}
+            />
+          )}
       </div>
     </StyledDiv>
   )
   return (
-    <div className="todo">{isEditing ? editingTemplate : normalTemplate}</div>
+    <div>
+      {isEditing ? (
+        editingTemplate
+      ) : isCongratsPage ? (
+        <CongratsCard
+          serie={serie}
+          totalTaskDone={totalTaskDone}
+          name={name}
+          setisCongratsPage={setisCongratsPage}
+        />
+      ) : (
+        normalTemplate
+      )}
+    </div>
   )
 }

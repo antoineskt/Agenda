@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { nanoid } from 'nanoid'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
-import DateSelectorTwo from '../../components/DateSelectorTwo'
+import DateSelector from '../../components/DateSelector'
 import Input from '../../components/Input'
 import ButtonDuray from '../../components/ButtonDuray'
 
@@ -58,8 +58,6 @@ function AddHabitTwo() {
   }
 
   function handleRepeatClick(numberOfWeek) {
-    console.log('click')
-
     setSelectedDuration(numberOfWeek)
     const duration = numberOfWeek
 
@@ -71,10 +69,8 @@ function AddHabitTwo() {
     // si il y a bien une des dates séléctionnés et une durée :
     else if (selectedDate.length !== 0 && duration >= 1) {
       const repeatedDates = []
-      console.log('repeteadates débuit : ' + repeatedDates)
-      console.log('inside first condition')
+
       for (let i = 0; i < duration; i++) {
-        console.log('inside boucle')
         repeatedDates.push(
           ...selectedDate.map(
             (day) => dayjs(day).add(i, 'week') //créer une répétion des dates sélectionnés
@@ -82,15 +78,12 @@ function AddHabitTwo() {
         )
       }
       //on met dans le state final les dates répétés
-      console.log('repeteddata : ' + repeatedDates)
       setListOfRepeatedDate(repeatedDates)
-      console.log(repeatedDates.length)
     }
   }
 
   function saveData() {
     if (name !== '') {
-      console.log('le name est ' + name)
       const formattedData = listOfRepeatedDate
         ? listOfRepeatedDate.map((day) => day.format('dddd D MMMM'))
         : selectedDate.map((day) => day.format('dddd D MMMM'))
@@ -106,11 +99,9 @@ function AddHabitTwo() {
       const getDataFromLS = JSON.parse(localStorage.getItem('todos'))
       if (getDataFromLS) {
         const newDatasForLS = [...getDataFromLS, newDatas]
-        console.log('log de newdatasForLS : ' + newDatasForLS)
         localStorage.setItem('todos', JSON.stringify(newDatasForLS))
         setName('')
       } else {
-        console.log('log de newDatas : ' + JSON.stringify(newDatas))
         localStorage.setItem('todos', JSON.stringify([newDatas])) //je mets un tableau ici pr créer un tableau d'objets
         setName('')
       }
@@ -124,7 +115,7 @@ function AddHabitTwo() {
         <H2>Quel est votre objectif ? </H2>
         <Input onChange={handleInput} value={name} />
         <H2>Quels jours allez vous réaliser votre objectif ? </H2>
-        <DateSelectorTwo
+        <DateSelector
           setSelectedDate={setSelectedDate}
           selectedDate={selectedDate}
         />
