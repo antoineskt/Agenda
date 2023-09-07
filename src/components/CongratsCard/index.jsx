@@ -1,4 +1,14 @@
 import './style.css'
+import styled from 'styled-components'
+
+const StyledSection = styled.section`
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+`
 
 export default function CongratsCard({
   serie,
@@ -8,27 +18,30 @@ export default function CongratsCard({
   isCongratsPage,
 }) {
   return (
-    <section class="container">
-      <div class={'card-container'}>
-        <div class="card-content">
-          <div class="card-title">
-            <span class="title">Bravo !</span>
+    <StyledSection
+      onClick={() => setisCongratsPage(false)}
+      className="container"
+    >
+      <div className={'card-container'}>
+        <div className="card-content">
+          <div className="card-title">
+            <span className="title">Bravo !</span>
           </div>
-          <div class="card-body">
-            <div class="svg-card">{name}</div>
-            <div class="svg-card">🔥{serie}</div>
-            <div class="svg-card">Total: {totalTaskDone}</div>
+          <div className="card-body">
+            <div className="svg-card">{name}</div>
+            <div className="svg-card">🔥{serie}</div>
+            <div className="svg-card">Total: {totalTaskDone}</div>
           </div>
-          <div class="card-footer">
+          <div className="card-footer">
             <button
               onClick={() => setisCongratsPage(false)}
-              class="buttonClose"
+              className="buttonClose"
             >
               Fermer
             </button>
           </div>
         </div>
       </div>
-    </section>
+    </StyledSection>
   )
 }

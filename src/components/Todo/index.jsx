@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import SlideButton from 'react-slide-button'
 import styled from 'styled-components'
 import './todo.css' //For set the black bg of swipe button
 import CongratsCard from '../CongratsCard'
+import { HabitContext } from '../../context/HabitContext'
+import { isAfuturDate } from '../../utils/checkDate'
 
 const svgEdit = (
   <svg
@@ -114,26 +116,19 @@ const DivEditDeleteButton = styled.div`
 `
 
 export default function ToDo({
-  editTask,
   id,
   date,
-  FormattedDateOfToday,
-  selectedDate,
   dateIsDone,
   name,
   serie,
   totalTaskDone,
-  showCountToOne,
-  showTotal,
-  deleteTask,
   showSlideButton,
-  items,
-  setisCongratsPage,
-  isCongratsPage,
-  setItems,
 }) {
   const [isEditing, setEditing] = useState(false)
   const [newName, setNewName] = useState('')
+  const [isCongratsPage, setisCongratsPage] = useState(false)
+  const { items, deleteTask, setItems, editTask, selectedDate } =
+    useContext(HabitContext)
 
   function handleChange(e) {
     setNewName(e.target.value)
@@ -146,31 +141,11 @@ export default function ToDo({
     setEditing(false)
   }
 
-  //renvoie true si la date selectionné est une date future
-  const isAfuturDate = ({ FormattedDateOfToday, selectedDate, date }) => {
-    if (date.indexOf(FormattedDateOfToday) < date.indexOf(selectedDate)) {
-      return true
-    } else {
-      return false
-    }
-  }
-
   //est ce validé ?
   const isValidate = ({ dateIsDone, selectedDate }) => {
     if (dateIsDone.includes(selectedDate)) {
       return true
     } else return false
-  }
-
-  const handleCongratsPage = (id) => {
-    const updatedItems = items.map((task) => {
-      if (id === task.id) {
-        return { ...task, isCongratsPage: true }
-      } else {
-        return task
-      }
-    })
-    setItems(updatedItems)
   }
 
   const slideDone = (id, selectedDate) => {
@@ -239,17 +214,20 @@ export default function ToDo({
         <DivLeft>
           <StyledLabel htmlFor={id}>{name}</StyledLabel>
         </DivLeft>
-
         <DivRight>
+          {/* Partout sauf dans les dates futurs */}
           {!isAfuturDate({ serie, date }) && (
             <DivCountFires>🔥{serie} Jours</DivCountFires>
           )}
-          {showCountToOne && (
-            <DivCountToOne>
-              {isValidate({ dateIsDone, selectedDate }) ? 1 : 0}/1
-            </DivCountToOne>
-          )}
-          {showTotal && <div>Total : {totalTaskDone} </div>}
+
+          <DivCountToOne>
+            {/* Juste dans la homePage */}
+            {isValidate({ dateIsDone, selectedDate }) ? 1 : 0}/1
+          </DivCountToOne>
+
+          <div>
+            {/* statistique et calendridren */} Total : {totalTaskDone}{' '}
+          </div>
 
           <DivEditDeleteButton>
             <StyledButton type="button" onClick={() => setEditing(true)}>
@@ -262,7 +240,7 @@ export default function ToDo({
         </DivRight>
       </DivTop>
       <div>
-        {!isAfuturDate({ FormattedDateOfToday, selectedDate, date }) &&
+        {!isAfuturDate({ selectedDate, date }) &&
           showSlideButton &&
           !dateIsDone.includes(selectedDate) && (
             <SlideButton
@@ -273,8 +251,8 @@ export default function ToDo({
               overlayClassList="my-overlay-class"
               reset={selectedDate}
               onSlideDone={() => {
-                handleCongratsPage(id)
                 slideDone(id, selectedDate)
+                setisCongratsPage(true)
               }}
             />
           )}
@@ -283,9 +261,8 @@ export default function ToDo({
   )
   return (
     <div>
-      {isEditing ? (
-        editingTemplate
-      ) : isCongratsPage ? (
+      {isEditing ? editingTemplate : normalTemplate}
+      {isCongratsPage && (
         <CongratsCard
           serie={serie}
           totalTaskDone={totalTaskDone}
@@ -293,8 +270,6 @@ export default function ToDo({
           setisCongratsPage={setisCongratsPage}
           isCongratsPage={isCongratsPage}
         />
-      ) : (
-        normalTemplate
       )}
     </div>
   )

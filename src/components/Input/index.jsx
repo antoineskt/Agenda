@@ -2,19 +2,19 @@ import './input.css'
 
 export default function Input({ onChange, value }) {
   return (
-    <div class="container">
+    <div className="container">
       <input
         required=""
         type="text"
         name="text"
-        class="input"
+        className="input"
         placeholder="écrivez ici"
         id="new-todo-input"
         autoComplete="off"
         onChange={onChange}
         value={value}
       />
-      <label class="label"></label>
+      <label className="label"></label>
     </div>
   )
 }

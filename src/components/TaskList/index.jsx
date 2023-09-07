@@ -1,21 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Todo from '../../components/Todo'
+import { HabitContext } from '../../context/HabitContext'
 
-function TaskList({
-  items,
-  setItems,
-  selectedDate,
-  deleteTask,
-  editTask,
-  showSlideButton,
-  shouldBeFilteredByDate,
-  addDateIsDone,
-  FormattedDateOfToday,
-  showCountToOne,
-  showTotal,
-  setisCongratsPage,
-  isCongratsPage,
-}) {
+function TaskList({ selectedDate, shouldBeFilteredByDate }) {
+  const { items } = useContext(HabitContext)
   //retourne un nv tablo d'une ou pls taches ayant la mm date que celle selectionné
   //on vérifie pr chaque tache si elle contient la date
   const filteredTasks = shouldBeFilteredByDate //Si on affiche sur la page home, on filtre par date, si other, non
@@ -30,23 +18,15 @@ function TaskList({
       id={task.id}
       name={task.name}
       key={task.id}
-      deleteTask={deleteTask}
-      editTask={editTask}
       task={task}
       totalTaskDone={task.totalTaskDone}
-      showSlideButton={showSlideButton}
       selectedDate={selectedDate}
-      addDateIsDone={addDateIsDone}
-      FormattedDateOfToday={FormattedDateOfToday}
       items={items}
-      setItems={setItems}
+      showTotal={false}
       date={task.date}
       dateIsDone={task.dateIsDone}
-      showCountToOne={showCountToOne}
-      showTotal={showTotal}
-      setisCongratsPage={setisCongratsPage}
-      isCongratsPage={isCongratsPage}
       isValidated={task.isValidated}
+      showSlideButton={true}
     />
   ))
 

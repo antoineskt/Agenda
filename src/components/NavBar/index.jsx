@@ -10,12 +10,12 @@ const svgLogo = (
     viewBox="0 0 49 50"
     width="49"
   >
-    <path d="m0 0h49v49.0559h-49z" fill="#fff" fill-opacity=".01" />
+    <path d="m0 0h49v49.0559h-49z" fill="#fff" fillOpacity=".01" />
     <g
       stroke="#f0e7e7"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="4"
     >
       <ellipse
         cx="17.6777"
@@ -120,9 +120,12 @@ const NavMenuInBurger = styled.nav`
 
 function NavBar() {
   const [click, setClick] = useState(false)
+  const closeNavbar = () => setClick(false)
   return (
     <Header>
-      <DivLogo>{svgLogo}</DivLogo>
+      <DivLogo>
+        <a href="/">{svgLogo}</a>
+      </DivLogo>
 
       <Nav>
         <StyledLink to="/">Accueil</StyledLink>
@@ -169,13 +172,21 @@ function NavBar() {
       )}
 
       <NavMenuInBurger $click={click}>
-        <StyledLink to="/">Accueil</StyledLink>
+        <StyledLink onClick={() => closeNavbar()} to="/">
+          Accueil
+        </StyledLink>
 
-        <StyledLink to="/AddHabitOne">Créer un objectif</StyledLink>
+        <StyledLink onClick={() => closeNavbar()} to="/AddHabitOne">
+          Créer un objectif
+        </StyledLink>
 
-        <StyledLink to="/Stats">Statistiques</StyledLink>
+        <StyledLink onClick={() => closeNavbar()} to="/Stats">
+          Statistiques
+        </StyledLink>
 
-        <StyledLink to="/CalendarPage">Calendrier</StyledLink>
+        <StyledLink onClick={() => closeNavbar()} to="/CalendarPage">
+          Calendrier
+        </StyledLink>
       </NavMenuInBurger>
     </Header>
   )

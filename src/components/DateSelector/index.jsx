@@ -1,17 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import dayjs from 'dayjs'
 import DaysOfWeek from '../DaysOfWeek'
-
-const DateSelector = ({
-  setSelectedDate,
-  selectedDate,
-  isHome,
-  items,
-  setItems,
-  FormattedDateOfToday,
-  setisCongratsPage,
-  isCongratsPage,
-}) => {
+import { FormattedDateOfToday } from '../../utils/formatDate'
+import { HabitContext } from '../../context/HabitContext'
+const DateSelector = ({ setSelectedDate, selectedDate, isHome }) => {
+  const { setItems, items } = useContext(HabitContext)
   const startOfWeek = dayjs().startOf('week')
 
   const weekdays = new Array(7)
@@ -21,11 +14,9 @@ const DateSelector = ({
   let formattedStateDay = []
   if (selectedDate && selectedDate.length >= 1) {
     formattedStateDay = selectedDate.map((day) => day.format('dddd D MMMM'))
-  } else {
   }
 
   const handleDayClick = (day) => {
-    isCongratsPage && setisCongratsPage(false)
     const formattedClickDay = day.format('dddd D MMMM')
 
     // si c'est la page home :

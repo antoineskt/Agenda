@@ -10,7 +10,8 @@ const StyledGlobalStyle = createGlobalStyle`
       margin: 0;
       padding: 0;
       background: black;
-      color: rgb(237, 230, 218)
+      color: rgb(237, 230, 218);
+      overflow-x:hidden ;
 
     }
 `

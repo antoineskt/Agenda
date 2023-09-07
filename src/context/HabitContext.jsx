@@ -1,25 +1,18 @@
 import { useState, useEffect } from 'react'
+import { createContext } from 'react'
 import dayjs from 'dayjs'
-import 'dayjs/locale/fr' // Importez le module de localisation française
-import utc from 'dayjs/plugin/utc' // Importez le plugin pour le fuseau horaire UTC
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-dayjs.extend(utc) // Ajoutez le plugin UTC à Day.js
-dayjs.extend(customParseFormat)
+export const HabitContext = createContext()
 
-// Utilisez la localisation française
-dayjs.locale('fr')
-
-export function useData() {
+const HabitProvider = ({ children }) => {
   const [items, setItems] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(
+    dayjs().format('dddd D MMMM')
+  )
 
   const getData = () => {
     const datas = JSON.parse(localStorage.getItem('todos'))
-
-    if (datas) {
-      setItems(datas)
-    }
-    setIsLoading(false)
+    if (datas) setItems(datas)
   }
 
   useEffect(() => {
@@ -30,6 +23,7 @@ export function useData() {
     const remainingTasks = items.filter((task) => id !== task.id)
     setItems(remainingTasks)
     localStorage.setItem('todos', JSON.stringify(remainingTasks))
+    getData()
   }
 
   const editTask = (id, newName) => {
@@ -42,13 +36,23 @@ export function useData() {
     setItems(editedTaskList)
     localStorage.setItem('todos', JSON.stringify(editedTaskList))
   }
-
-  return {
+  const contextValues = {
     items,
-    isLoading,
-    getData,
     deleteTask,
     editTask,
     setItems,
+    isLoading,
+    setIsLoading,
+    getData,
+    selectedDate,
+    setSelectedDate,
   }
+
+  return (
+    <HabitContext.Provider value={contextValues}>
+      {children}
+    </HabitContext.Provider>
+  )
 }
+
+export default HabitProvider

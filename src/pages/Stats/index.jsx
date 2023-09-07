@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import NavBar from '../../components/NavBar'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import { useData } from '../../utils/Datas'
@@ -42,7 +41,6 @@ function Stats() {
         <div>Loading..</div>
       ) : items.length !== 0 ? (
         <HomeContainer>
-          <NavBar />
           <StyledDivContainerNoData>
             <UlTaskList>
               <TaskList
@@ -60,7 +58,6 @@ function Stats() {
         </HomeContainer>
       ) : (
         <HomeContainer>
-          <NavBar />
           <MainStyled>
             <StyledDivHomeWithNoData>
               Il n'y a pas encore de statistiques, crée une habitude

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import NavBar from '../../components/NavBar'
 import Button from '../../components/Button'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { nanoid } from 'nanoid'
 import dayjs from 'dayjs'
@@ -43,8 +42,10 @@ function AddHabitTwo() {
   const [selectedDuration, setSelectedDuration] = useState(null)
   const [listOfRepeatedDate, setListOfRepeatedDate] = useState(null)
 
-  // Read the URL parameters on page load
+  const navigate = useNavigate()
   const location = useLocation()
+
+  // Read the URL parameters on page load
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const habitName = params.get('habit')
@@ -53,24 +54,23 @@ function AddHabitTwo() {
     }
   }, [location])
 
-  function handleInput(e) {
+  function handleName(e) {
     setName(e.target.value)
   }
 
   function handleRepeatClick(numberOfWeek) {
     setSelectedDuration(numberOfWeek)
-    const duration = numberOfWeek
-
+    console.log(selectedDuration)
     //si le state contient deja le chiffre du btn cliqué renvoyer 0 pour désactiver la couleur du btn
     if (selectedDuration && selectedDuration === numberOfWeek) {
       setSelectedDuration(0)
       setListOfRepeatedDate(null)
     }
     // si il y a bien une des dates séléctionnés et une durée :
-    else if (selectedDate.length !== 0 && duration >= 1) {
+    else if (selectedDate.length !== 0 && numberOfWeek >= 1) {
       const repeatedDates = []
 
-      for (let i = 0; i < duration; i++) {
+      for (let i = 0; i < numberOfWeek; i++) {
         repeatedDates.push(
           ...selectedDate.map(
             (day) => dayjs(day).add(i, 'week') //créer une répétion des dates sélectionnés
@@ -83,37 +83,40 @@ function AddHabitTwo() {
   }
 
   function saveData() {
-    if (name !== '') {
-      const formattedData = listOfRepeatedDate
-        ? listOfRepeatedDate.map((day) => day.format('dddd D MMMM'))
-        : selectedDate.map((day) => day.format('dddd D MMMM'))
-      const newDatas = {
-        id: `todo-${nanoid()}`,
-        name: name,
-        date: formattedData,
-        totalDate: formattedData.length, //nombre de dates total pour cet objectif
-        totalTaskDone: 0,
-        serie: 0,
-        dateIsDone: [], //tableau boolean pr chaque jour, si une date validé, true
-      }
-      const getDataFromLS = JSON.parse(localStorage.getItem('todos'))
-      if (getDataFromLS) {
-        const newDatasForLS = [...getDataFromLS, newDatas]
-        localStorage.setItem('todos', JSON.stringify(newDatasForLS))
-        setName('')
-      } else {
-        localStorage.setItem('todos', JSON.stringify([newDatas])) //je mets un tableau ici pr créer un tableau d'objets
-        setName('')
-      }
-    } else return console.log('pas de data entrée')
+    if (!name || selectedDate.length < 1 || !selectedDuration) {
+      alert('saea')
+      return
+    }
+
+    const formattedData = listOfRepeatedDate
+      ? listOfRepeatedDate.map((day) => day.format('dddd D MMMM'))
+      : selectedDate.map((day) => day.format('dddd D MMMM'))
+    const newDatas = {
+      id: `todo-${nanoid()}`,
+      name: name,
+      date: formattedData,
+      totalDate: formattedData.length, //nombre de dates total pour cet objectif
+      totalTaskDone: 0,
+      serie: 0,
+      dateIsDone: [], //tableau boolean pr chaque jour, si une date validé, true
+    }
+    const getDataFromLS = JSON.parse(localStorage.getItem('todos'))
+    if (getDataFromLS) {
+      const newDatasForLS = [...getDataFromLS, newDatas]
+      localStorage.setItem('todos', JSON.stringify(newDatasForLS))
+      setName('')
+    } else {
+      localStorage.setItem('todos', JSON.stringify([newDatas])) //je mets un tableau ici pr créer un tableau d'objets
+      setName('')
+      navigate('/')
+    }
   }
 
   return (
     <div>
-      <NavBar />
       <StyledContaineur>
         <H2>Quel est votre objectif ? </H2>
-        <Input onChange={handleInput} value={name} />
+        <Input onChange={handleName} value={name} />
         <H2>Quels jours allez vous réaliser votre objectif ? </H2>
         <DateSelector
           setSelectedDate={setSelectedDate}
@@ -151,9 +154,7 @@ function AddHabitTwo() {
           </DivButtonDuray>
         </div>
 
-        <Link to="/">
-          <Button onClick={saveData}>VALIDER</Button>
-        </Link>
+        <Button onClick={saveData}>VALIDER</Button>
       </StyledContaineur>
     </div>
   )

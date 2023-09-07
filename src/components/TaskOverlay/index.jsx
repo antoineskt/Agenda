@@ -27,7 +27,9 @@ const TaskOverlay = ({ selectedDay, onClose }) => {
   return (
     <Overlay>
       <TaskDetailsContainer>
-        <h3>Tâche(s) du {selectedDay.format('dddd D MMMM')}</h3>
+        <h3 style={{ color: 'black' }}>
+          Tâche(s) du {selectedDay.format('dddd D MMMM')}
+        </h3>
         <TaskList
           items={items}
           selectedDate={selectedDay.format('dddd D MMMM')}

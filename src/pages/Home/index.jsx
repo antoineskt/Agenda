@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import NavBar from '../../components/NavBar'
+import { useContext, useState } from 'react'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -8,6 +7,7 @@ import fr from 'dayjs/locale/fr'
 import { useData } from '../../utils/Datas'
 import TaskList from '../../components/TaskList'
 import DateSelector from '../../components/DateSelector'
+import { HabitContext } from '../../context/HabitContext'
 
 dayjs.locale({
   ...fr,
@@ -53,63 +53,29 @@ const StyledDivOfCurrentDay = styled.div`
 `
 
 export default function Home() {
-  const {
-    items,
-    setItems,
-    isLoading,
-    deleteTask,
-    editTask,
-
-    addDateIsDone,
-    FormattedDateOfToday,
-  } = useData()
-
-  const [selectedDate, setSelectedDate] = useState(
-    dayjs().format('dddd D MMMM')
-  ) // Initialize with the current date)
-  const [isCongratsPage, setisCongratsPage] = useState(false)
+  const { addDateIsDone } = useData()
+  const { items, selectedDate, setSelectedDate } = useContext(HabitContext)
 
   return (
     <div>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : items.length !== 0 ? (
-        <HomeContainer>
-          <NavBar />
+      <HomeContainer>
+        {items.length >= 1 && (
           <StyledDivContainerNoData>
-            <DateSelector
-              setSelectedDate={setSelectedDate}
-              isHome={true}
-              items={items}
-              setItems={setItems}
-              FormattedDateOfToday={FormattedDateOfToday}
-              setisCongratsPage={setisCongratsPage}
-              isCongratsPage={isCongratsPage}
-            />
-            {selectedDate && (
-              <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
-            )}
+            <DateSelector setSelectedDate={setSelectedDate} isHome={true} />
+
+            <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
 
             <TaskList //Affiché uniquement si une des dates correspond a la date selectionné
-              items={items}
               selectedDate={selectedDate}
-              deleteTask={deleteTask}
-              editTask={editTask}
-              setItems={setItems}
               showSlideButton={true}
               shouldBeFilteredByDate={true}
               addDateIsDone={addDateIsDone}
-              FormattedDateOfToday={FormattedDateOfToday}
               showCountToOne={true}
               showTotal={false}
-              setisCongratsPage={setisCongratsPage}
-              isCongratsPage={isCongratsPage}
             />
           </StyledDivContainerNoData>
-        </HomeContainer>
-      ) : (
-        <HomeContainer>
-          <NavBar />
+        )}
+        {items.length < 1 && (
           <MainStyled>
             <StyledDivHomeWithNoData>
               Créer une habitude personnalisée dès maintenant afin
@@ -120,8 +86,8 @@ export default function Home() {
               <Button>Click me!</Button>
             </Link>
           </MainStyled>
-        </HomeContainer>
-      )}
+        )}
+      </HomeContainer>
     </div>
   )
 }
