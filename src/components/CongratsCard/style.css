@@ -11,6 +11,7 @@
   flex-wrap: wrap;
   flex-direction: column;
   gap: 1em;
+  margin-bottom: 50px;
 }
 
 .buttonClose {

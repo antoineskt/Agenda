@@ -3,10 +3,10 @@ import Todo from '../../components/Todo'
 
 function TaskList({
   items,
+  setItems,
   selectedDate,
   deleteTask,
   editTask,
-  slideDone,
   showSlideButton,
   shouldBeFilteredByDate,
   addDateIsDone,
@@ -32,19 +32,21 @@ function TaskList({
       key={task.id}
       deleteTask={deleteTask}
       editTask={editTask}
-      slideDone={slideDone}
+      task={task}
       totalTaskDone={task.totalTaskDone}
       showSlideButton={showSlideButton}
       selectedDate={selectedDate}
       addDateIsDone={addDateIsDone}
       FormattedDateOfToday={FormattedDateOfToday}
       items={items}
+      setItems={setItems}
       date={task.date}
       dateIsDone={task.dateIsDone}
       showCountToOne={showCountToOne}
       showTotal={showTotal}
       setisCongratsPage={setisCongratsPage}
       isCongratsPage={isCongratsPage}
+      isValidated={task.isValidated}
     />
   ))
 

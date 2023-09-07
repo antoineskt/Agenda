@@ -59,7 +59,7 @@ export default function Home() {
     isLoading,
     deleteTask,
     editTask,
-    slideDone,
+
     addDateIsDone,
     FormattedDateOfToday,
   } = useData()
@@ -95,7 +95,7 @@ export default function Home() {
               selectedDate={selectedDate}
               deleteTask={deleteTask}
               editTask={editTask}
-              slideDone={slideDone}
+              setItems={setItems}
               showSlideButton={true}
               shouldBeFilteredByDate={true}
               addDateIsDone={addDateIsDone}

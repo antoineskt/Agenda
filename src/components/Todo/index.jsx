@@ -127,9 +127,10 @@ export default function ToDo({
   showTotal,
   deleteTask,
   showSlideButton,
-  slideDone,
+  items,
   setisCongratsPage,
   isCongratsPage,
+  setItems,
 }) {
   const [isEditing, setEditing] = useState(false)
   const [newName, setNewName] = useState('')
@@ -159,6 +160,55 @@ export default function ToDo({
     if (dateIsDone.includes(selectedDate)) {
       return true
     } else return false
+  }
+
+  const handleCongratsPage = (id) => {
+    const updatedItems = items.map((task) => {
+      if (id === task.id) {
+        return { ...task, isCongratsPage: true }
+      } else {
+        return task
+      }
+    })
+    setItems(updatedItems)
+  }
+
+  const slideDone = (id, selectedDate) => {
+    console.log('datas ici')
+
+    const countTaskList = items.map((task) => {
+      //
+      if (id === task.id) {
+        //est ce que dateIsone inclut deja la date selectionné ? si oui retourné serie, sinon retourné serie + 1
+        const countSerie = dateIsDone.includes(selectedDate)
+          ? serie
+          : (serie += 1)
+
+        const newCount = dateIsDone.includes(selectedDate)
+          ? totalTaskDone
+          : totalTaskDone + 1
+
+        const newDateIsDone = !dateIsDone.includes(selectedDate)
+          ? [...dateIsDone, selectedDate]
+          : dateIsDone
+        if (!dateIsDone.includes(selectedDate)) {
+        } else alert('Objectif déjà validé')
+
+        const isValidated = dateIsDone.includes(selectedDate) ? true : false
+
+        return {
+          ...task,
+          totalTaskDone: newCount,
+          dateIsDone: newDateIsDone,
+          serie: countSerie,
+          isValidated: isValidated,
+        }
+      }
+      return task
+    })
+    console.log(countTaskList)
+    setItems(countTaskList)
+    localStorage.setItem('todos', JSON.stringify(countTaskList))
   }
 
   const editingTemplate = (
@@ -213,7 +263,8 @@ export default function ToDo({
       </DivTop>
       <div>
         {!isAfuturDate({ FormattedDateOfToday, selectedDate, date }) &&
-          showSlideButton && (
+          showSlideButton &&
+          !dateIsDone.includes(selectedDate) && (
             <SlideButton
               mainText="Swipe me"
               overlayText="Bravo"
@@ -222,7 +273,7 @@ export default function ToDo({
               overlayClassList="my-overlay-class"
               reset={selectedDate}
               onSlideDone={() => {
-                setisCongratsPage(true)
+                handleCongratsPage(id)
                 slideDone(id, selectedDate)
               }}
             />
