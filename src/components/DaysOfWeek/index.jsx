@@ -5,9 +5,10 @@ export default function DaysOfWeek({
   weekdays,
   handleDayClick,
   selectedDate,
-  formattedStateDay,
+  arrayOfSelectedDateRightFormat,
   items,
 }) {
+  //on affiche chaque jours de la semaine actuel récupéré de weekdays
   return (
     <div>
       {weekdays.map((day) => (
@@ -15,10 +16,13 @@ export default function DaysOfWeek({
           items={items}
           onClick={() => handleDayClick(day)}
           key={day}
+          //on affiche le bouton supprimer uniquement si il n'a pas deja été cliqué (permet le désélection)
           isActive={
             selectedDate
               ? selectedDate.length >= 1 &&
-                formattedStateDay.includes(day.format('dddd D MMMM'))
+                arrayOfSelectedDateRightFormat.includes(
+                  day.format('dddd D MMMM')
+                )
               : false
           }
         >

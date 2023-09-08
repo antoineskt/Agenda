@@ -5,8 +5,8 @@ export default function DaysButton({ children, onClick, isActive, items }) {
     <button
       type="button"
       items={items}
-      type="button"
-      className={`delete-button ${isActive ? 'active' : 'inactive'}`}
+      //on affiche le bouton supprimer uniquement si il n'a pas deja été cliqué (permet le désélection)
+      className={`date-button ${isActive ? 'active' : 'inactive'}`}
       onClick={onClick}
     >
       {children}

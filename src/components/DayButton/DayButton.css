@@ -1,4 +1,4 @@
-.delete-button {
+.date-button {
   background-color: #000;
   color: #fff;
   font-size: 22px;
@@ -35,7 +35,7 @@
   }
 }
 
-.delete-button::after {
+.date-button::after {
   content: '';
   position: absolute;
   top: 0;
@@ -54,7 +54,7 @@
   transition: all 0.1s ease-in-out 0s;
 }
 
-.delete-button::before {
+.date-button::before {
   content: '';
   position: absolute;
   top: 0;
@@ -75,7 +75,7 @@
   transition: all 0.1s ease-in-out 0s;
 }
 
-.delete-button:active {
+.date-button:active {
   will-change: transform;
   transform: perspective(80px) rotateX(5deg) rotateY(1deg) translateY(3px)
     scale(0.96);
@@ -87,7 +87,7 @@
   transition: all 0.1s ease-in-out 0s;
 }
 
-.delete-button::after:active {
+.date-button::after:active {
   background-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.5),
@@ -95,7 +95,7 @@
   );
 }
 
-.delete-button:active::before {
+.date-button:active::before {
   content: '';
   display: block;
   position: absolute;
@@ -118,11 +118,11 @@
   }
 }
 
-.delete-button:focus {
+.date-button:focus {
   outline: none;
 }
 
-.delete-button:hover {
+.date-button:hover {
   color: grey;
 }
 

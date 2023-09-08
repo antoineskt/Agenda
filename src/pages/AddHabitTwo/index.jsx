@@ -5,12 +5,13 @@ import styled from 'styled-components'
 import { nanoid } from 'nanoid'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
-import DateSelector from '../../components/DateSelector'
+
 import ButtonDuray from '../../components/ButtonDuray'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import { useContext } from 'react'
 import { HabitContext } from '../../context/HabitContext'
+import { DateSelectorAddHabit } from '../../components/DateSelectorAddHabit'
 
 dayjs.locale({
   ...fr,
@@ -119,7 +120,7 @@ function AddHabitTwo() {
           id={'new-todo-input'.toString()}
         />
         <H2>Quels jours allez vous réaliser votre objectif ? </H2>
-        <DateSelector
+        <DateSelectorAddHabit
           setSelectedDate={setSelectedDate}
           selectedDate={selectedDate}
         />
