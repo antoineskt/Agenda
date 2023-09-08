@@ -48,7 +48,6 @@ const DateSelector = ({ setSelectedDate, selectedDate, isHome }) => {
               task.totalTaskDone >= 2 &&
               task.totalTaskDone === arrayOfDateWithoutFuturDate.length
             ) {
-              console.log('OUI ANTOINe')
               return { ...task, serie: task.totalTaskDone }
             } else {
               const indexDateBefore = task.date.indexOf(formattedDate) - 1
