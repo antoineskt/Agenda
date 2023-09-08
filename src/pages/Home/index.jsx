@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
 import { useData } from '../../utils/Datas'
 import TaskList from '../../components/TaskList'
-import DateSelector from '../../components/DateSelector'
+import DateSelectorHome from '../../components/DateSelectorHome'
 import { HabitContext } from '../../context/HabitContext'
 
 dayjs.locale({
@@ -61,7 +61,7 @@ export default function Home() {
       <HomeContainer>
         {items.length >= 1 && (
           <StyledDivContainerNoData>
-            <DateSelector setSelectedDate={setSelectedDate} isHome={true} />
+            <DateSelectorHome setSelectedDate={setSelectedDate} isHome={true} />
             <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
             <TaskList //Affiché uniquement si une des dates correspond a la date selectionné
               selectedDate={selectedDate}

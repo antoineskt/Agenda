@@ -8,7 +8,7 @@ export default function DaysOfWeek({
   arrayOfSelectedDateRightFormat,
   items,
 }) {
-  //on affiche chaque jours de la semaine actuel récupéré de weekdays
+  //on affiche chaque jours de la semaine actuelle récupérée de weekdays
   return (
     <div>
       {weekdays.map((day) => (

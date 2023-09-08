@@ -3,11 +3,7 @@ import DaysOfWeek from '../DaysOfWeek'
 import { weekdays } from '../../utils/functionDate'
 import { HabitContext } from '../../context/HabitContext'
 
-export function DateSelectorAddHabit({
-  setSelectedDate,
-  selectedDate,
-  isHome,
-}) {
+export function DateSelectorAddHabit({ setSelectedDate, selectedDate }) {
   const { items } = useContext(HabitContext)
   //tableau de date sélectionné au bon format lors de l'ajouts d'objectifs (pas utile ds home du coup)
   let arrayOfSelectedDateRightFormat = []

@@ -45,10 +45,10 @@ function AddHabitTwo() {
   const [selectedDuration, setSelectedDuration] = useState(null)
   const [listOfRepeatedDate, setListOfRepeatedDate] = useState(null)
   const { createTask } = useContext(HabitContext)
-  const navigate = useNavigate()
+  const navigate = useNavigate() //permet d'appeler la constante avec un parametre pour naviguer
   const location = useLocation()
 
-  // Read the URL parameters on page load
+  // Read the URL parameters on page load for use the template from the previous page
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const habitName = params.get('habit')
@@ -76,7 +76,7 @@ function AddHabitTwo() {
       for (let i = 0; i < numberOfWeek; i++) {
         repeatedDates.push(
           ...selectedDate.map(
-            (day) => dayjs(day).add(i, 'week') //créer une répétion des dates sélectionnés
+            (day) => dayjs(day).add(i, 'week').format('dddd D MMMM') //créer une répétion des dates sélectionnés
           )
         )
       }
@@ -90,22 +90,20 @@ function AddHabitTwo() {
     if (selectedDate.length < 1 || !selectedDuration)
       return alert('Veuillez indiquer des jours et une période')
 
-    const formattedData = listOfRepeatedDate
-      ? listOfRepeatedDate.map((day) => day.format('dddd D MMMM'))
-      : selectedDate.map((day) => day.format('dddd D MMMM'))
-
     const newDatas = {
       id: `todo-${nanoid()}`,
       name,
-      date: formattedData,
-      totalDate: formattedData.length, //nombre de dates total pour cet objectif
+      date: listOfRepeatedDate,
+      totalDate: listOfRepeatedDate.length, //nombre de dates total pour cet objectif
       totalTaskDone: 0,
       serie: 0,
       dateIsDone: [], //tableau boolean pr chaque jour, si une date validé, true
     }
     const getDataFromLS = JSON.parse(localStorage.getItem('todos'))
+
+    //passage de newwDatas et getDataFromLs a la fonction createTask
     createTask(newDatas, getDataFromLS)
-    navigate('/')
+    navigate('/') //navigue en homePage
   }
 
   return (

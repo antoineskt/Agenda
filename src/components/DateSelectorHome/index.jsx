@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import DaysOfWeek from '../DaysOfWeek'
 import { FormattedDateOfToday, weekdays } from '../../utils/functionDate'
 import { HabitContext } from '../../context/HabitContext'
-const DateSelector = ({ setSelectedDate, selectedDate, isHome }) => {
+const DateSelectorHome = ({ setSelectedDate, selectedDate }) => {
   const { setItems, items } = useContext(HabitContext)
 
   const handleDayClick = (day) => {
@@ -11,7 +11,6 @@ const DateSelector = ({ setSelectedDate, selectedDate, isHome }) => {
 
     const isAserie = items.map((task) => {
       //si l'on clique sur un date future, cela retourne rien
-
       if (
         task.date.indexOf(FormattedDateOfToday) <
         task.date.indexOf(formattedDate)
@@ -65,4 +64,4 @@ const DateSelector = ({ setSelectedDate, selectedDate, isHome }) => {
   )
 }
 
-export default DateSelector
+export default DateSelectorHome
