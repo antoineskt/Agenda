@@ -36,6 +36,17 @@ const HabitProvider = ({ children }) => {
     setItems(editedTaskList)
     localStorage.setItem('todos', JSON.stringify(editedTaskList))
   }
+  const createTask = (task, dataFromLs) => {
+    if (dataFromLs) {
+      const newDatasForLS = [...dataFromLs, task]
+      localStorage.setItem('todos', JSON.stringify(newDatasForLS))
+      setItems(newDatasForLS)
+    } else {
+      localStorage.setItem('todos', JSON.stringify([task]))
+      setItems([task])
+    }
+  }
+
   const contextValues = {
     items,
     deleteTask,
@@ -46,6 +57,7 @@ const HabitProvider = ({ children }) => {
     getData,
     selectedDate,
     setSelectedDate,
+    createTask,
   }
 
   return (

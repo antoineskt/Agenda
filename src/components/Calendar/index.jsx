@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import fr from 'dayjs/locale/fr'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
 import { useData } from '../../utils/Datas'
 import { useState } from 'react'
 import TaskOverlay from '../TaskOverlay'
+import { HabitContext } from '../../context/HabitContext'
 
 dayjs.locale({
   ...fr,
@@ -104,7 +105,7 @@ const ButtonChangeMonth = styled.button`
 export default function Calendar() {
   const [selectedDay, setSelectedDay] = useState(null)
   const [startOfMonth, setStartOfMonth] = useState(dayjs().startOf('month'))
-  const { items } = useData()
+  const { items } = useContext(HabitContext)
 
   const startOfWeek = startOfMonth.startOf('week')
   const daysInCalendar = 6 * 7
