@@ -1,21 +1,23 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import Button from '../../components/Button'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { nanoid } from 'nanoid'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
 import DateSelector from '../../components/DateSelector'
-import Input from '../../components/Input'
 import ButtonDuray from '../../components/ButtonDuray'
+import Button from '../../components/Button'
+import Input from '../../components/Input'
+import { useContext } from 'react'
+import { HabitContext } from '../../context/HabitContext'
 
 dayjs.locale({
   ...fr,
   weekStart: 1,
 })
 
-const StyledContaineur = styled.div`
+const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,7 +43,7 @@ function AddHabitTwo() {
   const [selectedDate, setSelectedDate] = useState([])
   const [selectedDuration, setSelectedDuration] = useState(null)
   const [listOfRepeatedDate, setListOfRepeatedDate] = useState(null)
-
+  const { createTask } = useContext(HabitContext)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -82,18 +84,18 @@ function AddHabitTwo() {
     }
   }
 
-  function saveData() {
-    if (!name || selectedDate.length < 1 || !selectedDuration) {
-      alert('saea')
-      return
-    }
+  function saveData(e) {
+    e.preventDefault()
+    if (selectedDate.length < 1 || !selectedDuration)
+      return alert('Veuillez indiquer des jours et une période')
 
     const formattedData = listOfRepeatedDate
       ? listOfRepeatedDate.map((day) => day.format('dddd D MMMM'))
       : selectedDate.map((day) => day.format('dddd D MMMM'))
+
     const newDatas = {
       id: `todo-${nanoid()}`,
-      name: name,
+      name,
       date: formattedData,
       totalDate: formattedData.length, //nombre de dates total pour cet objectif
       totalTaskDone: 0,
@@ -101,22 +103,21 @@ function AddHabitTwo() {
       dateIsDone: [], //tableau boolean pr chaque jour, si une date validé, true
     }
     const getDataFromLS = JSON.parse(localStorage.getItem('todos'))
-    if (getDataFromLS) {
-      const newDatasForLS = [...getDataFromLS, newDatas]
-      localStorage.setItem('todos', JSON.stringify(newDatasForLS))
-      setName('')
-    } else {
-      localStorage.setItem('todos', JSON.stringify([newDatas])) //je mets un tableau ici pr créer un tableau d'objets
-      setName('')
-      navigate('/')
-    }
+    createTask(newDatas, getDataFromLS)
+    navigate('/')
   }
 
   return (
     <div>
-      <StyledContaineur>
-        <H2>Quel est votre objectif ? </H2>
-        <Input onChange={handleName} value={name} />
+      <StyledForm onSubmit={(e) => saveData(e)}>
+        <label htmlFor="new-todo-input">
+          <H2>Quel est votre objectif ? </H2>
+        </label>
+        <Input
+          onChange={(e) => handleName(e)}
+          value={name}
+          id={'new-todo-input'.toString()}
+        />
         <H2>Quels jours allez vous réaliser votre objectif ? </H2>
         <DateSelector
           setSelectedDate={setSelectedDate}
@@ -154,8 +155,8 @@ function AddHabitTwo() {
           </DivButtonDuray>
         </div>
 
-        <Button onClick={saveData}>VALIDER</Button>
-      </StyledContaineur>
+        <Button type="submit">VALIDER</Button>
+      </StyledForm>
     </div>
   )
 }

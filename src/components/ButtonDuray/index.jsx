@@ -5,6 +5,7 @@ export default function ButtonDuray({ onClick, children, isSelected }) {
   return (
     <button
       onClick={onClick}
+      type="button"
       className={`button ${isSelected ? 'active' : 'inactive'}`}
     >
       <svg

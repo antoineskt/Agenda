@@ -63,9 +63,9 @@ const StyledSpan = styled.span`
   }
 `
 
-function Button({ children, onClick }) {
+function Button({ children, onClick, ...rest }) {
   return (
-    <StyledButton type="button" onClick={onClick}>
+    <StyledButton {...rest} onClick={onClick}>
       <StyledSpan>{children}</StyledSpan>
     </StyledButton>
   )

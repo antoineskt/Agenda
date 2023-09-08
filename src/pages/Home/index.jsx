@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -62,9 +62,7 @@ export default function Home() {
         {items.length >= 1 && (
           <StyledDivContainerNoData>
             <DateSelector setSelectedDate={setSelectedDate} isHome={true} />
-
             <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
-
             <TaskList //Affiché uniquement si une des dates correspond a la date selectionné
               selectedDate={selectedDate}
               showSlideButton={true}

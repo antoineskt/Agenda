@@ -5,6 +5,7 @@ export default function DaysButton({ children, onClick, isActive, items }) {
     <button
       type="button"
       items={items}
+      type="button"
       className={`delete-button ${isActive ? 'active' : 'inactive'}`}
       onClick={onClick}
     >
