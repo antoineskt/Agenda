@@ -12,6 +12,7 @@ import Input from '../../components/Input'
 import { useContext } from 'react'
 import { HabitContext } from '../../context/HabitContext'
 import { DateSelectorAddHabit } from '../../components/DateSelectorAddHabit'
+import { orderByDate } from '../../utils/functionDate'
 
 dayjs.locale({
   ...fr,
@@ -75,7 +76,7 @@ function AddHabitTwo() {
 
       for (let i = 0; i < numberOfWeek; i++) {
         repeatedDates.push(
-          ...selectedDate.map(
+          ...orderByDate(selectedDate).map(
             (day) => dayjs(day).add(i, 'week').format('dddd D MMMM') //créer une répétion des dates sélectionnés
           )
         )
