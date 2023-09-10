@@ -2,17 +2,10 @@ import { useContext } from 'react'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import dayjs from 'dayjs'
-import fr from 'dayjs/locale/fr'
 import { useData } from '../../utils/Datas'
 import TaskList from '../../components/TaskList'
 import DateSelectorHome from '../../components/DateSelectorHome'
 import { HabitContext } from '../../context/HabitContext'
-
-dayjs.locale({
-  ...fr,
-  weekStart: 1,
-})
 
 const HomeContainer = styled.div`
   margin: 0;

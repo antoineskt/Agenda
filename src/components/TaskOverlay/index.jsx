@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import TaskList from '../TaskList'
-import { useData } from '../../utils/Datas'
+import { useContext } from 'react'
+import { HabitContext } from '../../context/HabitContext'
 
 const Overlay = styled.div`
   position: fixed;
@@ -23,7 +24,8 @@ const TaskDetailsContainer = styled.div`
 `
 
 const TaskOverlay = ({ selectedDay, onClose }) => {
-  const { items, deleteTask, editTask, serieCount } = useData()
+  const { items, deleteTask, editTask } = useContext(HabitContext)
+
   return (
     <Overlay>
       <TaskDetailsContainer>
@@ -35,7 +37,6 @@ const TaskOverlay = ({ selectedDay, onClose }) => {
           selectedDateFormatted={selectedDay.format('dddd D MMMM')}
           deleteTask={deleteTask}
           editTask={editTask}
-          serieCount={serieCount}
           showSlideButton={false}
           shouldBeFilteredByDate={true}
         />

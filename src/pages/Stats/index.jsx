@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
-import { useData } from '../../utils/Datas'
 import TaskList from '../../components/TaskList'
+import { useContext } from 'react'
+import { HabitContext } from '../../context/HabitContext'
 
 const HomeContainer = styled.div`
   margin: 0;
@@ -33,7 +34,7 @@ const UlTaskList = styled.div`
 `
 
 function Stats() {
-  const { items, isLoading, deleteTask, editTask, serieCount } = useData()
+  const { items, isLoading, deleteTask, editTask } = useContext(HabitContext)
 
   return (
     <div>
@@ -47,7 +48,6 @@ function Stats() {
                 items={items}
                 deleteTask={deleteTask}
                 editTask={editTask}
-                serieCount={serieCount}
                 showSlideButton={false}
                 shouldBeFilteredByDate={false}
                 showCountToOne={false}

@@ -1,4 +1,9 @@
 import dayjs from 'dayjs'
+import fr from 'dayjs/locale/fr'
+dayjs.locale({
+  ...fr,
+  weekStart: 1,
+})
 
 export const today = dayjs() //today without format
 export const formattedDateOfToday = today.format('dddd D MMMM')
