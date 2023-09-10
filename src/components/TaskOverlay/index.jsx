@@ -32,7 +32,7 @@ const TaskOverlay = ({ selectedDay, onClose }) => {
         </h3>
         <TaskList
           items={items}
-          selectedDate={selectedDay.format('dddd D MMMM')}
+          selectedDateFormatted={selectedDay.format('dddd D MMMM')}
           deleteTask={deleteTask}
           editTask={editTask}
           serieCount={serieCount}

@@ -4,8 +4,8 @@ import DayButton from '../DayButton'
 export default function DaysOfWeek({
   weekdays,
   handleDayClick,
-  selectedDate,
-  arrayOfSelectedDateRightFormat,
+  selectedDateFormatted,
+  arrayOfselectedDateFormattedRightFormat,
   items,
 }) {
   //on affiche chaque jours de la semaine actuelle récupérée de weekdays
@@ -18,9 +18,10 @@ export default function DaysOfWeek({
           key={day}
           //on affiche le bouton supprimer uniquement si il n'a pas deja été cliqué (permet le désélection)
           isActive={
-            selectedDate
-              ? selectedDate.length >= 1 &&
-                arrayOfSelectedDateRightFormat.includes(
+            selectedDateFormatted
+              ? selectedDateFormatted.length >= 1 &&
+                arrayOfselectedDateFormattedRightFormat &&
+                arrayOfselectedDateFormattedRightFormat.includes(
                   day.format('dddd D MMMM')
                 )
               : false

@@ -2,13 +2,13 @@ import React, { useContext } from 'react'
 import Todo from '../../components/Todo'
 import { HabitContext } from '../../context/HabitContext'
 
-function TaskList({ selectedDate, shouldBeFilteredByDate }) {
+function TaskList({ selectedDateFormatted, shouldBeFilteredByDate }) {
   const { items } = useContext(HabitContext)
   //retourne un nv tablo d'une ou pls taches ayant la mm date que celle selectionné
   //on vérifie pr chaque tache si elle contient la date
   const filteredTasks = shouldBeFilteredByDate //Si on affiche sur la page home, on filtre par date, si other, non
     ? items.filter(
-        (task) => task.date.includes(selectedDate) //Une des dates des taches inclut elle la date selectionné ?
+        (task) => task.date.includes(selectedDateFormatted) //Une des dates des taches inclut elle la date selectionné ?
       )
     : items
   //on map ce tableau d'une ou plusieurs taches filtrés en fonction de la date selectionné
@@ -20,7 +20,7 @@ function TaskList({ selectedDate, shouldBeFilteredByDate }) {
       key={task.id}
       task={task}
       totalTaskDone={task.totalTaskDone}
-      selectedDate={selectedDate}
+      selectedDateFormatted={selectedDateFormatted}
       items={items}
       showTotal={false}
       date={task.date}

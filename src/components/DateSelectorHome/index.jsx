@@ -1,25 +1,36 @@
 import React, { useContext } from 'react'
 import DaysOfWeek from '../DaysOfWeek'
-import { FormattedDateOfToday, weekdays } from '../../utils/functionDate'
+import {
+  formattedDateOfToday,
+  weekdays,
+  isAfutureDate,
+} from '../../utils/functionDate'
 import { HabitContext } from '../../context/HabitContext'
-const DateSelectorHome = ({ setSelectedDate, selectedDate }) => {
+
+const DateSelectorHome = ({
+  setselectedDateFormatted,
+  selectedDateFormatted,
+}) => {
   const { setItems, items } = useContext(HabitContext)
 
   const handleDayClick = (day) => {
     const formattedDate = day.format('dddd D MMMM') //date selectionné formaté
-    setSelectedDate(formattedDate)
+    setselectedDateFormatted(formattedDate)
+    const FormattedDataCompair = day.format('YYYY-MM-DD')
+
+    isAfutureDate(FormattedDataCompair)
 
     const isAserie = items.map((task) => {
       //si l'on clique sur un date future, cela retourne rien
       if (
-        task.date.indexOf(FormattedDateOfToday) <
+        task.date.indexOf(formattedDateOfToday) <
         task.date.indexOf(formattedDate)
       ) {
         return task
       } else {
         //vérification si c'est une série ou pas ?
         if (task.dateIsDone.length >= 1 && task.date.includes(formattedDate)) {
-          const indexDateOfTheDay = task.date.indexOf(FormattedDateOfToday)
+          const indexDateOfTheDay = task.date.indexOf(formattedDateOfToday)
           const arrayOfDateWithoutFuturDate = task.date.slice(
             0,
             indexDateOfTheDay + 1
@@ -58,7 +69,7 @@ const DateSelectorHome = ({ setSelectedDate, selectedDate }) => {
     <DaysOfWeek
       weekdays={weekdays}
       handleDayClick={handleDayClick}
-      selectedDate={selectedDate}
+      selectedDateFormatted={selectedDateFormatted}
       items={items}
     />
   )

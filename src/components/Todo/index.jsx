@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import './todo.css' //For set the black bg of swipe button
 import CongratsCard from '../CongratsCard'
 import { HabitContext } from '../../context/HabitContext'
-import { isAfuturDate } from '../../utils/checkDate'
+import { isAfutureDate } from '../../utils/functionDate/index'
 
 const svgEdit = (
   <svg
@@ -127,7 +127,7 @@ export default function ToDo({
   const [isEditing, setEditing] = useState(false)
   const [newName, setNewName] = useState('')
   const [isCongratsPage, setisCongratsPage] = useState(false)
-  const { items, deleteTask, setItems, editTask, selectedDate } =
+  const { items, deleteTask, setItems, editTask, selectedDateFormatted } =
     useContext(HabitContext)
 
   function handleChange(e) {
@@ -142,34 +142,36 @@ export default function ToDo({
   }
 
   //est ce validé ?
-  const isValidate = ({ dateIsDone, selectedDate }) => {
-    if (dateIsDone.includes(selectedDate)) {
+  const isValidate = ({ dateIsDone, selectedDateFormatted }) => {
+    if (dateIsDone.includes(selectedDateFormatted)) {
       return true
     } else return false
   }
 
-  const slideDone = (id, selectedDate) => {
+  const slideDone = (id, selectedDateFormatted) => {
     console.log('datas ici')
 
     const countTaskList = items.map((task) => {
       //
       if (id === task.id) {
         //est ce que dateIsone inclut deja la date selectionné ? si oui retourné serie, sinon retourné serie + 1
-        const countSerie = dateIsDone.includes(selectedDate)
+        const countSerie = dateIsDone.includes(selectedDateFormatted)
           ? serie
           : (serie += 1)
 
-        const newCount = dateIsDone.includes(selectedDate)
+        const newCount = dateIsDone.includes(selectedDateFormatted)
           ? totalTaskDone
           : totalTaskDone + 1
 
-        const newDateIsDone = !dateIsDone.includes(selectedDate)
-          ? [...dateIsDone, selectedDate]
+        const newDateIsDone = !dateIsDone.includes(selectedDateFormatted)
+          ? [...dateIsDone, selectedDateFormatted]
           : dateIsDone
-        if (!dateIsDone.includes(selectedDate)) {
+        if (!dateIsDone.includes(selectedDateFormatted)) {
         } else alert('Objectif déjà validé')
 
-        const isValidated = dateIsDone.includes(selectedDate) ? true : false
+        const isValidated = dateIsDone.includes(selectedDateFormatted)
+          ? true
+          : false
 
         return {
           ...task,
@@ -216,13 +218,13 @@ export default function ToDo({
         </DivLeft>
         <DivRight>
           {/* Partout sauf dans les dates futurs */}
-          {!isAfuturDate({ serie, date }) && (
+          {!isAfutureDate({ serie, date }) && (
             <DivCountFires>🔥{serie} Jours</DivCountFires>
           )}
 
           <DivCountToOne>
             {/* Juste dans la homePage */}
-            {isValidate({ dateIsDone, selectedDate }) ? 1 : 0}/1
+            {isValidate({ dateIsDone, selectedDateFormatted }) ? 1 : 0}/1
           </DivCountToOne>
 
           <div>
@@ -240,18 +242,18 @@ export default function ToDo({
         </DivRight>
       </DivTop>
       <div>
-        {!isAfuturDate({ selectedDate, date }) &&
-          showSlideButton &&
-          !dateIsDone.includes(selectedDate) && (
+        {!isAfutureDate({ selectedDateFormatted, date }) && //Afficher le SlideButton uniquement si c pas une date future
+          showSlideButton && //et que la props showButton est passe et que la date selectionné n'a pas été deja validé
+          !dateIsDone.includes(selectedDateFormatted) && (
             <SlideButton
               mainText="Swipe me"
               overlayText="Bravo"
               classList="my-class"
               caretClassList="my-caret-class"
               overlayClassList="my-overlay-class"
-              reset={selectedDate}
+              reset={selectedDateFormatted}
               onSlideDone={() => {
-                slideDone(id, selectedDate)
+                slideDone(id, selectedDateFormatted)
                 setisCongratsPage(true)
               }}
             />

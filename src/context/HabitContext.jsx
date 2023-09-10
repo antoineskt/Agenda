@@ -6,7 +6,7 @@ export const HabitContext = createContext()
 const HabitProvider = ({ children }) => {
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [selectedDate, setSelectedDate] = useState(
+  const [selectedDateFormatted, setselectedDateFormatted] = useState(
     dayjs().format('dddd D MMMM')
   )
 
@@ -56,8 +56,8 @@ const HabitProvider = ({ children }) => {
     isLoading,
     setIsLoading,
     getData,
-    selectedDate,
-    setSelectedDate,
+    selectedDateFormatted,
+    setselectedDateFormatted,
     createTask,
   }
 

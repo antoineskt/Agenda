@@ -42,9 +42,11 @@ const H2 = styled.h2`
 
 function AddHabitTwo() {
   const [name, setName] = useState('')
-  const [selectedDate, setSelectedDate] = useState([])
+  const [selectedDateFormatted, setselectedDateFormatted] = useState([])
   const [selectedDuration, setSelectedDuration] = useState(null)
-  const [listOfRepeatedDate, setListOfRepeatedDate] = useState(null)
+  const [listOfRepeatedDateFormatted, setlistOfRepeatedDateFormatted] =
+    useState(null)
+  const [listOfRepeatedDate, setlistOfRepeatedDate] = useState(null)
   const { createTask } = useContext(HabitContext)
   const navigate = useNavigate() //permet d'appeler la constante avec un parametre pour naviguer
   const location = useLocation()
@@ -68,37 +70,51 @@ function AddHabitTwo() {
     //si le state contient deja le chiffre du btn cliqué renvoyer 0 pour désactiver la couleur du btn
     if (selectedDuration && selectedDuration === numberOfWeek) {
       setSelectedDuration(0)
-      setListOfRepeatedDate(null)
+      setlistOfRepeatedDateFormatted(null)
+      setlistOfRepeatedDate(null)
     }
     // si il y a bien une des dates séléctionnés et une durée :
-    else if (selectedDate.length !== 0 && numberOfWeek >= 1) {
+    else if (selectedDateFormatted.length !== 0 && numberOfWeek >= 1) {
       const repeatedDates = []
 
+      //créaton des dates répétées au format dddd D MMMM
       for (let i = 0; i < numberOfWeek; i++) {
         repeatedDates.push(
-          ...orderByDate(selectedDate).map(
+          ...orderByDate(selectedDateFormatted).map(
             (day) => dayjs(day).add(i, 'week').format('dddd D MMMM') //créer une répétion des dates sélectionnés
           )
         )
       }
-      //on met dans le state final les dates répétés
-      setListOfRepeatedDate(repeatedDates)
+      //on met dans le state final les dates répétées formattéss
+      setlistOfRepeatedDateFormatted(repeatedDates)
+
+      //création des dates répétés au formay dayJS
+      const repeteadDatesDayJs = []
+      for (let i = 0; i < numberOfWeek; i++) {
+        repeteadDatesDayJs.push(
+          ...orderByDate(selectedDateFormatted).map(
+            (day) => dayjs(day).add(i, 'week') //créer une répétion des dates sélectionnés
+          )
+        )
+      }
+      setlistOfRepeatedDate(repeteadDatesDayJs)
     }
   }
 
   function saveData(e) {
     e.preventDefault()
-    if (selectedDate.length < 1 || !selectedDuration)
+    if (selectedDateFormatted.length < 1 || !selectedDuration)
       return alert('Veuillez indiquer des jours et une période')
 
     const newDatas = {
       id: `todo-${nanoid()}`,
       name,
-      date: listOfRepeatedDate,
-      totalDate: listOfRepeatedDate.length, //nombre de dates total pour cet objectif
+      date: listOfRepeatedDateFormatted,
+      totalDate: listOfRepeatedDateFormatted.length, //nombre de dates total pour cet objectif
       totalTaskDone: 0,
       serie: 0,
       dateIsDone: [], //tableau boolean pr chaque jour, si une date validé, true
+      dateDayJS: listOfRepeatedDate,
     }
     const getDataFromLS = JSON.parse(localStorage.getItem('todos'))
 
@@ -120,20 +136,14 @@ function AddHabitTwo() {
         />
         <H2>Quels jours allez vous réaliser votre objectif ? </H2>
         <DateSelectorAddHabit
-          setSelectedDate={setSelectedDate}
-          selectedDate={selectedDate}
+          setselectedDateFormatted={setselectedDateFormatted}
+          selectedDateFormatted={selectedDateFormatted}
         />
         <div>
           <H2>
             Pendant combien de temps voulez vous réaliser votre objectif ?
           </H2>
           <DivButtonDuray>
-            <ButtonDuray
-              isSelected={selectedDuration ? selectedDuration === 1 : false}
-              onClick={() => handleRepeatClick(1)}
-            >
-              Une semaine
-            </ButtonDuray>
             <ButtonDuray
               isSelected={selectedDuration ? selectedDuration === 2 : false}
               onClick={() => handleRepeatClick(2)}

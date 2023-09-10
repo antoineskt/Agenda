@@ -3,37 +3,40 @@ import DaysOfWeek from '../DaysOfWeek'
 import { weekdays } from '../../utils/functionDate'
 import { HabitContext } from '../../context/HabitContext'
 
-export function DateSelectorAddHabit({ setSelectedDate, selectedDate }) {
+export function DateSelectorAddHabit({
+  setselectedDateFormatted,
+  selectedDateFormatted,
+}) {
   const { items } = useContext(HabitContext)
-  //tableau de date sélectionné au bon format lors de l'ajouts d'objectifs (pas utile ds home du coup)
-  let arrayOfSelectedDateRightFormat = []
-  if (selectedDate && selectedDate.length >= 1) {
-    arrayOfSelectedDateRightFormat = selectedDate.map((day) =>
+
+  //ajoute les dates cliqués sélectionnés au bon format dans un tableau
+  let arrayOfselectedDateFormattedRightFormat = []
+  if (selectedDateFormatted && selectedDateFormatted.length >= 1) {
+    arrayOfselectedDateFormattedRightFormat = selectedDateFormatted.map((day) =>
       day.format('dddd D MMMM')
     )
   }
-  console.log(arrayOfSelectedDateRightFormat)
 
   const handleDayClick = (day) => {
     const formattedClickDay = day.format('dddd D MMMM')
-
     if (
-      selectedDate.length >= 1 &&
-      arrayOfSelectedDateRightFormat.includes(formattedClickDay)
+      selectedDateFormatted.length >= 1 &&
+      arrayOfselectedDateFormattedRightFormat.includes(formattedClickDay)
     ) {
       //renvoie un tableau sans le jour séléctionné
       //permet la deselection d'une date
-      setSelectedDate(
-        selectedDate.filter(
+      setselectedDateFormatted(
+        selectedDateFormatted.filter(
           (day) => day.format('dddd D MMMM') !== formattedClickDay
         )
       )
-    } //sinon on ajoute normalement la nouvelle date cliqué au dates existantes
-    else if (selectedDate.length >= 1) {
-      setSelectedDate([...selectedDate, day])
+    }
+    //sinon on ajoute normalement la nouvelle date cliqué au dates existantes
+    else if (selectedDateFormatted.length >= 1) {
+      setselectedDateFormatted([...selectedDateFormatted, day])
     } //on ajoute simplement la date selectionné car il n'y en a pas encore
     else {
-      setSelectedDate([day])
+      setselectedDateFormatted([day])
     }
   }
 
@@ -41,8 +44,10 @@ export function DateSelectorAddHabit({ setSelectedDate, selectedDate }) {
     <DaysOfWeek
       weekdays={weekdays}
       handleDayClick={handleDayClick}
-      selectedDate={selectedDate}
-      arrayOfSelectedDateRightFormat={arrayOfSelectedDateRightFormat}
+      selectedDateFormatted={selectedDateFormatted}
+      arrayOfselectedDateFormattedRightFormat={
+        arrayOfselectedDateFormattedRightFormat
+      }
       items={items}
     />
   )

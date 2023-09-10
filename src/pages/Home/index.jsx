@@ -54,17 +54,24 @@ const StyledDivOfCurrentDay = styled.div`
 
 export default function Home() {
   const { addDateIsDone } = useData()
-  const { items, selectedDate, setSelectedDate } = useContext(HabitContext)
+  const { items, selectedDateFormatted, setselectedDateFormatted } =
+    useContext(HabitContext)
 
   return (
     <div>
       <HomeContainer>
         {items.length >= 1 && (
           <StyledDivContainerNoData>
-            <DateSelectorHome setSelectedDate={setSelectedDate} isHome={true} />
-            <StyledDivOfCurrentDay>{selectedDate}</StyledDivOfCurrentDay>
+            <DateSelectorHome
+              selectedDateFormatted={selectedDateFormatted}
+              setselectedDateFormatted={setselectedDateFormatted}
+              isHome={true}
+            />
+            <StyledDivOfCurrentDay>
+              {selectedDateFormatted}
+            </StyledDivOfCurrentDay>
             <TaskList //Affiché uniquement si une des dates correspond a la date selectionné
-              selectedDate={selectedDate}
+              selectedDateFormatted={selectedDateFormatted}
               showSlideButton={true}
               shouldBeFilteredByDate={true}
               addDateIsDone={addDateIsDone}
