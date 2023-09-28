@@ -52,6 +52,7 @@ function Stats() {
                 shouldBeFilteredByDate={false}
                 showCountToOne={false}
                 showTotal={true}
+                dontShowCounterToOne={true}
               />
             </UlTaskList>
           </StyledDivContainerNoData>

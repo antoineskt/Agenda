@@ -17,7 +17,3 @@ export const weekdays = new Array(7)
 export const orderByDate = (selectedDateFormatted) => {
   return selectedDateFormatted.sort((a, b) => (a.isBefore(b) ? -1 : 1))
 }
-
-export const isAfutureDate = (FormattedDataCompair) => {
-  return today.isBefore(FormattedDataCompair) ? true : false
-}

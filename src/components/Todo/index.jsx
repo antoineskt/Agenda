@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import './todo.css' //For set the black bg of swipe button
 import CongratsCard from '../CongratsCard'
 import { HabitContext } from '../../context/HabitContext'
-import { isAfutureDate } from '../../utils/functionDate/index'
 
 const svgEdit = (
   <svg
@@ -117,18 +116,24 @@ const DivEditDeleteButton = styled.div`
 
 export default function ToDo({
   id,
-  date,
   dateIsDone,
   name,
   serie,
   totalTaskDone,
   showSlideButton,
+  dontShowCounterToOne,
 }) {
   const [isEditing, setEditing] = useState(false)
   const [newName, setNewName] = useState('')
   const [isCongratsPage, setisCongratsPage] = useState(false)
-  const { items, deleteTask, setItems, editTask, selectedDateFormatted } =
-    useContext(HabitContext)
+  const {
+    items,
+    deleteTask,
+    setItems,
+    editTask,
+    selectedDateFormatted,
+    itsAfutureDate,
+  } = useContext(HabitContext)
 
   function handleChange(e) {
     setNewName(e.target.value)
@@ -218,14 +223,15 @@ export default function ToDo({
         </DivLeft>
         <DivRight>
           {/* Partout sauf dans les dates futurs */}
-          {!isAfutureDate({ serie, date }) && (
-            <DivCountFires>🔥{serie} Jours</DivCountFires>
-          )}
+          {!itsAfutureDate && <DivCountFires>🔥{serie} Jours</DivCountFires>}
 
-          <DivCountToOne>
-            {/* Juste dans la homePage */}
-            {isValidate({ dateIsDone, selectedDateFormatted }) ? 1 : 0}/1
-          </DivCountToOne>
+          {/* {si todo afficher dans stats, ne pas afficher le counter} */}
+          {!dontShowCounterToOne && (
+            <DivCountToOne>
+              {/* Juste dans la homePage */}
+              {isValidate({ dateIsDone, selectedDateFormatted }) ? 1 : 0}/1
+            </DivCountToOne>
+          )}
 
           <div>
             {/* statistique et calendridren */} Total : {totalTaskDone}{' '}
@@ -242,7 +248,7 @@ export default function ToDo({
         </DivRight>
       </DivTop>
       <div>
-        {!isAfutureDate({ selectedDateFormatted, date }) && //Afficher le SlideButton uniquement si c pas une date future
+        {!itsAfutureDate && //Afficher le SlideButton uniquement si c pas une date future
           showSlideButton && //et que la props showButton est passe et que la date selectionné n'a pas été deja validé
           !dateIsDone.includes(selectedDateFormatted) && (
             <SlideButton

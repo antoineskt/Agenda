@@ -9,6 +9,7 @@ const HabitProvider = ({ children }) => {
   const [selectedDateFormatted, setselectedDateFormatted] = useState(
     dayjs().format('dddd D MMMM')
   )
+  const [itsAfutureDate, setitsAfutureDate] = useState(false)
 
   const getData = () => {
     const datas = JSON.parse(localStorage.getItem('todos'))
@@ -18,6 +19,8 @@ const HabitProvider = ({ children }) => {
   useEffect(() => {
     getData()
   }, [])
+
+  const today = dayjs() //today without format
 
   const deleteTask = (id) => {
     const remainingTasks = items.filter((task) => id !== task.id)
@@ -48,6 +51,11 @@ const HabitProvider = ({ children }) => {
     }
   }
 
+  //la date cliquée est elle une date future ?
+  const isAdateFuture = (formattedDataForCompair) => {
+    return today.isBefore(formattedDataForCompair)
+  }
+
   const contextValues = {
     items,
     deleteTask,
@@ -59,6 +67,9 @@ const HabitProvider = ({ children }) => {
     selectedDateFormatted,
     setselectedDateFormatted,
     createTask,
+    isAdateFuture,
+    setitsAfutureDate,
+    itsAfutureDate,
   }
 
   return (

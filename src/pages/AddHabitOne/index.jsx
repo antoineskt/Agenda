@@ -44,7 +44,7 @@ function AddHabitOne() {
           <Link to="/AddHabitTwo?habit=Workout">
             <Button>Workout</Button>
           </Link>
-          <Link to="/AddHabitTwo?habit=Arrête%20de%20fumer">
+          <Link to="/AddHabitTwo?habit=Arrêter%20de%20fumer">
             <Button>Arrêter de fumer</Button>
           </Link>
         </Div>
