@@ -2,7 +2,6 @@ import { useContext } from 'react'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { useData } from '../../utils/Datas'
 import TaskList from '../../components/TaskList'
 import DateSelectorHome from '../../components/DateSelectorHome'
 import { HabitContext } from '../../context/HabitContext'
@@ -46,7 +45,6 @@ const StyledDivOfCurrentDay = styled.div`
 `
 
 export default function Home() {
-  const { addDateIsDone } = useData()
   const { items, selectedDateFormatted, setselectedDateFormatted } =
     useContext(HabitContext)
 
@@ -67,7 +65,6 @@ export default function Home() {
               selectedDateFormatted={selectedDateFormatted}
               showSlideButton={true}
               shouldBeFilteredByDate={true}
-              addDateIsDone={addDateIsDone}
               showCountToOne={true}
               showTotal={false}
             />

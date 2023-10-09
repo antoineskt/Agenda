@@ -39,7 +39,7 @@ const HabitProvider = ({ children }) => {
     setItems(editedTaskList)
     localStorage.setItem('todos', JSON.stringify(editedTaskList))
   }
-  //le parametre task est newsdata et datafromls getdDataFromLs
+
   const createTask = (task, dataFromLs) => {
     if (dataFromLs) {
       const newDatasForLS = [...dataFromLs, task]
@@ -51,7 +51,6 @@ const HabitProvider = ({ children }) => {
     }
   }
 
-  //la date cliquée est elle une date future ?
   const isAdateFuture = (formattedDataForCompair) => {
     return today.isBefore(formattedDataForCompair)
   }

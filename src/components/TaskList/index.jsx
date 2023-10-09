@@ -7,6 +7,7 @@ function TaskList({
   shouldBeFilteredByDate,
   showSlideButton,
   dontShowCounterToOne,
+  showTotal,
 }) {
   const { items } = useContext(HabitContext)
   //retourne un nv tablo d'une ou pls taches ayant la mm date que celle selectionné
@@ -22,15 +23,9 @@ function TaskList({
       serie={task.serie}
       id={task.id}
       name={task.name}
-      key={task.id}
-      task={task}
       totalTaskDone={task.totalTaskDone}
-      selectedDateFormatted={selectedDateFormatted}
-      items={items}
-      showTotal={false}
-      date={task.date}
+      showTotal={showTotal}
       dateIsDone={task.dateIsDone}
-      isValidated={task.isValidated}
       showSlideButton={showSlideButton}
       dontShowCounterToOne={dontShowCounterToOne}
     />

@@ -115,11 +115,12 @@ const DivEditDeleteButton = styled.div`
 `
 
 export default function ToDo({
-  id,
-  dateIsDone,
-  name,
   serie,
+  id,
+  name,
   totalTaskDone,
+  showTotal,
+  dateIsDone,
   showSlideButton,
   dontShowCounterToOne,
 }) {
@@ -232,10 +233,8 @@ export default function ToDo({
               {isValidate({ dateIsDone, selectedDateFormatted }) ? 1 : 0}/1
             </DivCountToOne>
           )}
-
-          <div>
-            {/* statistique et calendridren */} Total : {totalTaskDone}{' '}
-          </div>
+          {/*Show total of habits done if props is true(only for stat page) */}
+          {showTotal && <div>Total : {totalTaskDone} </div>}
 
           <DivEditDeleteButton>
             <StyledButton type="button" onClick={() => setEditing(true)}>
